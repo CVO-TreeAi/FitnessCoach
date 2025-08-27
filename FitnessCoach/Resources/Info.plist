@@ -98,18 +98,8 @@
         </dict>
     </array>
     
-    <!-- Supported Device Families -->
-    <key>UIDeviceFamily</key>
-    <array>
-        <integer>1</integer> <!-- iPhone -->
-        <integer>2</integer> <!-- iPad -->
-    </array>
-    
     <!-- Required Device Capabilities for HealthKit -->
-    <key>UIRequiredDeviceCapabilities</key>
-    <array>
-        <string>healthkit</string>
-    </array>
+    <!-- UIDeviceFamily is set in build settings TARGETED_DEVICE_FAMILY -->
     
     <!-- App Transport Security -->
     <key>NSAppTransportSecurity</key>
