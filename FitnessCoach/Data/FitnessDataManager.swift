@@ -22,7 +22,7 @@ class FitnessDataManager: ObservableObject {
     @Published var userProfile: UserProfile?
     @Published var dashboardStats: DashboardStats = DashboardStats(
         todayCalories: 0,
-        calorieGoal: 2200,
+        calorieGoal: 2000,
         waterCups: 0,
         waterGoal: 8,
         activeMinutes: 0,
@@ -30,7 +30,7 @@ class FitnessDataManager: ObservableObject {
         steps: 0,
         stepsGoal: 10000,
         workoutsThisWeek: 0,
-        workoutGoal: 4,
+        workoutGoal: 3,
         currentStreak: 0,
         longestStreak: 0
     )
@@ -42,7 +42,7 @@ class FitnessDataManager: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     private init() {
-        loadSampleData()
+        loadEmptyData()  // Start with clean slate
         setupDataObservers()
     }
     
@@ -52,7 +52,7 @@ class FitnessDataManager: ObservableObject {
         if healthKitManager.isAuthorized {
             dashboardStats = DashboardStats(
                 todayCalories: mealEntries.caloriesForDay(Date()),
-                calorieGoal: 2200,
+                calorieGoal: 2000,
                 waterCups: Int(waterEntries.totalForDay(Date()) / 8),
                 waterGoal: 8,
                 activeMinutes: healthKitManager.todaysActiveMinutes,
@@ -68,33 +68,36 @@ class FitnessDataManager: ObservableObject {
     }
     
     // MARK: - Data Loading
-    private func loadSampleData() {
-        // Load comprehensive sample data
-        exercises = createSampleExercises()
-        workoutTemplates = createSampleWorkoutTemplates()
-        foods = createSampleFoods()
+    private func loadEmptyData() {
+        // Start with empty data for real user
+        exercises = createSampleExercises()  // Keep exercise library
+        workoutTemplates = createSampleWorkoutTemplates()  // Keep templates
+        foods = createBasicFoods()  // Basic food database
         
-        // Create sample user profile
+        // Empty user profile - will be set from iCloud
         userProfile = UserProfile(
-            name: "Fitness Enthusiast",
-            email: "user@example.com",
-            dateOfBirth: Calendar.current.date(byAdding: .year, value: -28, to: Date()),
-            gender: .male,
+            name: ProcessInfo.processInfo.hostName.replacingOccurrences(of: ".local", with: ""),
+            email: "",
+            dateOfBirth: nil,
+            gender: .notSpecified,
             heightInches: 70,
             activityLevel: .moderatelyActive,
-            fitnessGoals: [.muscleGain, .strengthGain],
+            fitnessGoals: [],
             dietaryRestrictions: [],
             preferences: UserPreferences(),
             createdAt: Date(),
             updatedAt: Date()
         )
         
-        // Add some sample data
-        addSampleMealEntries()
-        addSampleWaterEntries()
-        addSampleWeightEntries()
-        addSampleWorkoutSessions()
-        addSampleGoals()
+        // Start with empty data
+        mealEntries = []
+        waterEntries = []
+        weightEntries = []
+        workoutSessions = []
+        bodyMeasurements = []
+        progressPhotos = []
+        personalRecords = []
+        goals = []
         
         updateDashboardStats()
     }
@@ -134,12 +137,12 @@ class FitnessDataManager: ObservableObject {
         
         dashboardStats = DashboardStats(
             todayCalories: todayCalories,
-            calorieGoal: 2200,
+            calorieGoal: 2000,
             waterCups: waterCups,
             waterGoal: 8,
-            activeMinutes: 45, // Would come from HealthKit
+            activeMinutes: 0, // Will come from HealthKit
             activeGoal: 30,
-            steps: 8500, // Would come from HealthKit
+            steps: 0, // Will come from HealthKit
             stepsGoal: 10000,
             workoutsThisWeek: weeklyWorkouts,
             workoutGoal: 4,
@@ -687,6 +690,20 @@ class FitnessDataManager: ObservableObject {
                 difficulty: .intermediate,
                 equipment: [.barbell]
             )
+        ]
+    }
+    
+    private func createBasicFoods() -> [Food] {
+        // Just basic foods for manual entry - no sample data
+        return [
+            // Common proteins
+            Food(name: "Chicken Breast", brand: nil, barcode: nil, category: .meat, nutritionPer100g: NutritionFacts(calories: 165, protein: 31, carbs: 0, fat: 3.6, fiber: 0, sugar: 0, sodium: 74, cholesterol: 85), isVerified: true),
+            Food(name: "Eggs", brand: nil, barcode: nil, category: .meat, nutritionPer100g: NutritionFacts(calories: 155, protein: 13, carbs: 1.1, fat: 11, fiber: 0, sugar: 1.1, sodium: 124, cholesterol: 373), isVerified: true),
+            // Common carbs
+            Food(name: "White Rice", brand: nil, barcode: nil, category: .grains, nutritionPer100g: NutritionFacts(calories: 130, protein: 2.7, carbs: 28, fat: 0.3, fiber: 0.4, sugar: 0.1, sodium: 1, cholesterol: 0), isVerified: true),
+            Food(name: "Oatmeal", brand: nil, barcode: nil, category: .grains, nutritionPer100g: NutritionFacts(calories: 389, protein: 17, carbs: 66, fat: 7, fiber: 11, sugar: 0, sodium: 2, cholesterol: 0), isVerified: true),
+            // Common vegetables
+            Food(name: "Broccoli", brand: nil, barcode: nil, category: .vegetables, nutritionPer100g: NutritionFacts(calories: 34, protein: 2.8, carbs: 7, fat: 0.4, fiber: 2.6, sugar: 1.5, sodium: 33, cholesterol: 0), isVerified: true)
         ]
     }
     

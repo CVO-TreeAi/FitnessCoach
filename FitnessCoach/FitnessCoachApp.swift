@@ -5,8 +5,8 @@ import HealthKit
 class SimpleDataManager: ObservableObject {
     @Published var workouts: [WorkoutData] = []
     @Published var meals: [MealData] = []
-    @Published var waterIntake: Int = 5
-    @Published var currentWeight: Double = 185.0
+    @Published var waterIntake: Int = 0
+    @Published var currentWeight: Double = 0.0
     @Published var goals: [GoalData] = []
     
     struct WorkoutData: Identifiable {
@@ -56,28 +56,24 @@ class SimpleDataManager: ObservableObject {
         todaysMeals.reduce(0) { $0 + $1.calories }
     }
     
-    var weeklyWorkouts: Int { 3 }
+    var weeklyWorkouts: Int { workouts.filter { Calendar.current.isDateInThisWeek($0.date) && $0.isCompleted }.count }
     var activeGoals: [GoalData] { goals }
-    
-    func loadSampleData() {
-        workouts = [
-            WorkoutData(name: "Morning Routine", category: "Full Body", duration: 45, 
-                       exercises: [("Push-ups", 3, 15, 60)], date: Date(), isCompleted: false)
-        ]
-        meals = [
-            MealData(name: "Oatmeal", calories: 320, mealType: "Breakfast", date: Date())
-        ]
-    }
 }
 
 typealias DataManager = SimpleDataManager
+
+extension Calendar {
+    func isDateInThisWeek(_ date: Date) -> Bool {
+        isDate(date, equalTo: Date(), toGranularity: .weekOfYear)
+    }
+}
 
 @main
 struct FitnessCoachApp: App {
     @StateObject private var authManager = AuthenticationManager()
     @StateObject private var themeManager = ThemeManager()
     @StateObject private var healthKitManager = HealthKitManager()
-    @StateObject private var dataManager = FitnessDataManager.shared
+    @StateObject private var dataManager = SimpleDataManager()
     
     var body: some Scene {
         WindowGroup {
@@ -87,11 +83,7 @@ struct FitnessCoachApp: App {
                 .environmentObject(healthKitManager)
                 .environmentObject(dataManager)
                 .theme(themeManager.currentTheme)
-                .onReceive(healthKitManager.$isAuthorized) { isAuthorized in
-                    if isAuthorized {
-                        dataManager.syncWithHealthKit(healthKitManager)
-                    }
-                }
+                // HealthKit sync will be added when implementing full data manager
         }
     }
     
@@ -114,16 +106,17 @@ struct ContentView: View {
     @Environment(\.theme) private var theme
     
     var body: some View {
-        // Complete functional FitnessCoach app with all features
-        CompleteFunctionalTabView()
+        // Use SimpleWorkingApp for now - all features functional with zero data
+        SimpleWorkingApp()
     }
 }
+
 
 // SIMPLE WORKING APP - ALL BUTTONS FUNCTIONAL
 struct SimpleWorkingApp: View {
     @State private var selectedTab = 0
-    @State private var waterIntake = 5
-    @State private var currentWeight = 185.0
+    @State private var waterIntake = 0
+    @State private var currentWeight = 0.0
     @State private var showingSheet = false
     @State private var sheetType = SheetType.weight
     
