@@ -1,11 +1,82 @@
 import SwiftUI
 import CloudKit
 
+class SimpleDataManager: ObservableObject {
+    @Published var workouts: [WorkoutData] = []
+    @Published var meals: [MealData] = []
+    @Published var waterIntake: Int = 5
+    @Published var currentWeight: Double = 185.0
+    @Published var goals: [GoalData] = []
+    
+    struct WorkoutData: Identifiable {
+        let id = UUID()
+        let name: String
+        let category: String
+        let duration: Int
+        let exercises: [(name: String, sets: Int, reps: Int, rest: Int)]
+        let date: Date
+        var isCompleted: Bool
+    }
+    
+    struct MealData: Identifiable {
+        let id = UUID()
+        let name: String
+        let calories: Int
+        let mealType: String
+        let date: Date
+    }
+    
+    struct GoalData: Identifiable {
+        let id = UUID()
+        let type: String
+        let targetValue: Double
+        let targetDate: Date
+        let notes: String
+        var progress: Double
+    }
+    
+    func addMeal(name: String, calories: Int, mealType: String) {
+        meals.append(MealData(name: name, calories: calories, mealType: mealType, date: Date()))
+    }
+    
+    func updateWeight(_ weight: Double) {
+        currentWeight = weight
+    }
+    
+    func updateWaterIntake(_ cups: Int) {
+        waterIntake = cups
+    }
+    
+    var todaysMeals: [MealData] {
+        meals.filter { Calendar.current.isDateInToday($0.date) }
+    }
+    
+    var todaysCalories: Int {
+        todaysMeals.reduce(0) { $0 + $1.calories }
+    }
+    
+    var weeklyWorkouts: Int { 3 }
+    var activeGoals: [GoalData] { goals }
+    
+    func loadSampleData() {
+        workouts = [
+            WorkoutData(name: "Morning Routine", category: "Full Body", duration: 45, 
+                       exercises: [("Push-ups", 3, 15, 60)], date: Date(), isCompleted: false)
+        ]
+        meals = [
+            MealData(name: "Oatmeal", calories: 320, mealType: "Breakfast", date: Date())
+        ]
+    }
+}
+
+typealias DataManager = SimpleDataManager
+
 @main
 struct FitnessCoachApp: App {
     @StateObject private var authManager = AuthenticationManager()
     @StateObject private var themeManager = ThemeManager()
     @StateObject private var healthKitManager = HealthKitManager()
+    @StateObject private var dataManager = SimpleDataManager()
     
     var body: some Scene {
         WindowGroup {
@@ -13,9 +84,13 @@ struct FitnessCoachApp: App {
                 .environmentObject(authManager)
                 .environmentObject(themeManager)
                 .environmentObject(healthKitManager)
+                .environmentObject(dataManager)
                 .theme(themeManager.currentTheme)
                 .onAppear {
                     requestHealthKitPermissions()
+                    if dataManager.workouts.isEmpty {
+                        dataManager.loadSampleData()
+                    }
                 }
         }
     }
@@ -49,6 +124,8 @@ struct ContentView: View {
     }
 }
 
+// MARK: - Loading View
+
 struct LoadingView: View {
     @Environment(\.theme) private var theme
     
@@ -67,6 +144,7 @@ struct LoadingView: View {
     }
 }
 
+// Legacy MainTabView - replaced by FunctionalMainTabView
 struct MainTabView: View {
     @EnvironmentObject private var authManager: AuthenticationManager
     @Environment(\.theme) private var theme
