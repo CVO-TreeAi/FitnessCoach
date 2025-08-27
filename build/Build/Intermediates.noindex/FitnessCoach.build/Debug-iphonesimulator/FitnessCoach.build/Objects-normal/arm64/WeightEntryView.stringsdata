@@ -1,0 +1,96 @@
+{
+  "source": "/Users/ain/FitnessCoach/FitnessCoach/Features/Progress/WeightEntryView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Add Weight",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Record Weight",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Track your weight progress over time",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Weight Entry",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "lbs",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Enter weight",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "Please enter a weight between 50-1000 lbs",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "Date",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 89
+        }
+      },
+      {
+        "comment": "",
+        "key": "Select Date",
+        "location": {
+          "startingColumn": 33,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Save",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 117
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>11</integer>
+	<key>logs</key>
+	<dict>
+		<key>66612DA5-1B9F-4C8A-B98C-23E7DDFBA515</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>66612DA5-1B9F-4C8A-B98C-23E7DDFBA515.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>4</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>FitnessCoach project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>FitnessCoach</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project FitnessCoach with scheme FitnessCoach</string>
+			<key>timeStartedRecording</key>
+			<real>777768435.10128295</real>
+			<key>timeStoppedRecording</key>
+			<real>777768448.798262</real>
+			<key>title</key>
+			<string>Building project FitnessCoach with scheme FitnessCoach</string>
+			<key>uniqueIdentifier</key>
+			<string>66612DA5-1B9F-4C8A-B98C-23E7DDFBA515</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

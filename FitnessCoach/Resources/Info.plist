@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>CFBundleDisplayName</key>
+    <string>FitnessCoach</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>$(PRODUCT_NAME)</string>
+    <key>CFBundlePackageType</key>
+    <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UIApplicationSupportsMultipleScenes</key>
+        <true/>
+    </dict>
+    <key>UIApplicationSupportsIndirectInputEvents</key>
+    <true/>
+    <key>UILaunchScreen</key>
+    <dict/>
+    <key>UIRequiredDeviceCapabilities</key>
+    <array>
+        <string>armv7</string>
+    </array>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    
+    <!-- HealthKit Configuration -->
+    <key>NSHealthShareUsageDescription</key>
+    <string>FitnessCoach needs access to your health data to track your fitness progress, including weight, body measurements, workout data, and heart rate information. This helps provide personalized coaching insights.</string>
+    <key>NSHealthUpdateUsageDescription</key>
+    <string>FitnessCoach needs permission to save workout data and body measurements to your Health app to keep all your fitness information synchronized across your devices.</string>
+    
+    <!-- Camera and Photo Library for Progress Photos -->
+    <key>NSCameraUsageDescription</key>
+    <string>FitnessCoach needs camera access to capture progress photos that help track your fitness transformation over time.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>FitnessCoach needs photo library access to save and retrieve progress photos that document your fitness journey.</string>
+    
+    <!-- Location for gym/workout location tagging -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>FitnessCoach can optionally use your location to tag workout locations and find nearby gyms or fitness facilities.</string>
+    
+    <!-- Motion and Fitness for Apple Watch integration -->
+    <key>NSMotionUsageDescription</key>
+    <string>FitnessCoach uses motion data to enhance workout tracking and provide more accurate fitness metrics when used with Apple Watch.</string>
+    
+    <!-- Background App Refresh for workout tracking -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>background-fetch</string>
+        <string>background-processing</string>
+        <string>remote-notification</string>
+    </array>
+    
+    <!-- CloudKit Configuration -->
+    <key>CKKnownUserKeys</key>
+    <array>
+        <string>firstName</string>
+        <string>lastName</string>
+        <string>email</string>
+    </array>
+    
+    <!-- Sign in with Apple Configuration -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>Sign in with Apple</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>com.fitnesscoach.app</string>
+            </array>
+        </dict>
+    </array>
+    
+    <!-- Supported Device Families -->
+    <key>UIDeviceFamily</key>
+    <array>
+        <integer>1</integer> <!-- iPhone -->
+        <integer>2</integer> <!-- iPad -->
+    </array>
+    
+    <!-- Required Device Capabilities for HealthKit -->
+    <key>UIRequiredDeviceCapabilities</key>
+    <array>
+        <string>healthkit</string>
+    </array>
+    
+    <!-- App Transport Security -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <false/>
+        <key>NSExceptionDomains</key>
+        <dict>
+            <!-- Add any required domains here -->
+        </dict>
+    </dict>
+    
+    <!-- Minimum iOS Version -->
+    <key>MinimumOSVersion</key>
+    <string>16.0</string>
+    
+    <!-- App Icon Configuration -->
+    <key>CFBundleIcons</key>
+    <dict>
+        <key>CFBundlePrimaryIcon</key>
+        <dict>
+            <key>CFBundleIconFiles</key>
+            <array>
+                <string>AppIcon</string>
+            </array>
+        </dict>
+    </dict>
+    
+    <!-- Dark Mode Support -->
+    <key>UIUserInterfaceStyle</key>
+    <string>Automatic</string>
+    
+    <!-- Status Bar Configuration -->
+    <key>UIStatusBarStyle</key>
+    <string>UIStatusBarStyleDefault</string>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <true/>
+    
+</dict>
+</plist>

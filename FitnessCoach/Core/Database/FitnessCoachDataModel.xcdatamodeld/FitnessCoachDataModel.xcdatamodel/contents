@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22G320" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    
+    <!-- User Entity -->
+    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="userIdentifier" optional="NO" attributeType="String"/>
+        <attribute name="email" optional="NO" attributeType="String"/>
+        <attribute name="firstName" optional="NO" attributeType="String"/>
+        <attribute name="lastName" optional="NO" attributeType="String"/>
+        <attribute name="role" optional="NO" attributeType="String" defaultValue="user"/>
+        <attribute name="dateOfBirth" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="height" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="gender" optional="YES" attributeType="String"/>
+        <attribute name="activityLevel" optional="YES" attributeType="String"/>
+        <attribute name="fitnessGoals" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="createdAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="updatedAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isActive" optional="NO" attributeType="Boolean" defaultValue="YES" usesScalarValueType="YES"/>
+        <relationship name="coachProfile" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Coach" inverseName="user" inverseEntity="Coach"/>
+        <relationship name="clientProfile" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Client" inverseName="user" inverseEntity="Client"/>
+        <relationship name="workoutSessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WorkoutSession" inverseName="user" inverseEntity="WorkoutSession"/>
+        <relationship name="nutritionEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="NutritionEntry" inverseName="user" inverseEntity="NutritionEntry"/>
+        <relationship name="progressEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ProgressEntry" inverseName="user" inverseEntity="ProgressEntry"/>
+        <relationship name="goals" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Goal" inverseName="user" inverseEntity="Goal"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="userIdentifier"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    
+    <!-- Coach Entity -->
+    <entity name="Coach" representedClassName="Coach" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="businessName" optional="YES" attributeType="String"/>
+        <attribute name="certifications" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="specializations" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="yearsOfExperience" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="bio" optional="YES" attributeType="String"/>
+        <attribute name="hourlyRate" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="createdAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="coachProfile" inverseEntity="User"/>
+        <relationship name="clients" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Client" inverseName="coach" inverseEntity="Client"/>
+        <relationship name="workoutTemplates" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WorkoutTemplate" inverseName="coach" inverseEntity="WorkoutTemplate"/>
+        <relationship name="mealPlanTemplates" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MealPlanTemplate" inverseName="coach" inverseEntity="MealPlanTemplate"/>
+    </entity>
+    
+    <!-- Client Entity -->
+    <entity name="Client" representedClassName="Client" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="startWeight" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="goalWeight" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="startDate" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="targetDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="medicalConditions" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="injuries" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="preferences" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="isActive" optional="NO" attributeType="Boolean" defaultValue="YES" usesScalarValueType="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="clientProfile" inverseEntity="User"/>
+        <relationship name="coach" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Coach" inverseName="clients" inverseEntity="Coach"/>
+        <relationship name="assignedWorkouts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="AssignedWorkout" inverseName="client" inverseEntity="AssignedWorkout"/>
+        <relationship name="assignedMealPlans" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="AssignedMealPlan" inverseName="client" inverseEntity="AssignedMealPlan"/>
+    </entity>
+    
+    <!-- Exercise Entity -->
+    <entity name="Exercise" representedClassName="Exercise" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="NO" attributeType="String"/>
+        <attribute name="category" optional="NO" attributeType="String"/>
+        <attribute name="muscleGroups" optional="NO" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="equipment" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="instructions" optional="YES" attributeType="String"/>
+        <attribute name="difficulty" optional="NO" attributeType="String"/>
+        <attribute name="videoURL" optional="YES" attributeType="String"/>
+        <attribute name="imageURL" optional="YES" attributeType="String"/>
+        <attribute name="isCustom" optional="NO" attributeType="Boolean" defaultValue="NO" usesScalarValueType="YES"/>
+        <attribute name="createdAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="workoutExercises" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WorkoutExercise" inverseName="exercise" inverseEntity="WorkoutExercise"/>
+    </entity>
+    
+    <!-- WorkoutTemplate Entity -->
+    <entity name="WorkoutTemplate" representedClassName="WorkoutTemplate" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="NO" attributeType="String"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="category" optional="NO" attributeType="String"/>
+        <attribute name="difficulty" optional="NO" attributeType="String"/>
+        <attribute name="estimatedDuration" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="caloriesBurned" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="isPublic" optional="NO" attributeType="Boolean" defaultValue="NO" usesScalarValueType="YES"/>
+        <attribute name="tags" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="createdAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="coach" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Coach" inverseName="workoutTemplates" inverseEntity="Coach"/>
+        <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WorkoutExercise" inverseName="workoutTemplate" inverseEntity="WorkoutExercise"/>
+        <relationship name="assignedWorkouts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="AssignedWorkout" inverseName="workoutTemplate" inverseEntity="AssignedWorkout"/>
+    </entity>
+    
+    <!-- WorkoutExercise Entity -->
+    <entity name="WorkoutExercise" representedClassName="WorkoutExercise" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="orderIndex" optional="NO" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="sets" optional="NO" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="reps" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="weight" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="distance" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="restTime" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <relationship name="exercise" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="workoutExercises" inverseEntity="Exercise"/>
+        <relationship name="workoutTemplate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutTemplate" inverseName="exercises" inverseEntity="WorkoutTemplate"/>
+        <relationship name="workoutSession" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutSession" inverseName="exercises" inverseEntity="WorkoutSession"/>
+    </entity>
+    
+    <!-- AssignedWorkout Entity -->
+    <entity name="AssignedWorkout" representedClassName="AssignedWorkout" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="assignedDate" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="scheduledDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="status" optional="NO" attributeType="String" defaultValue="assigned"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <relationship name="client" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="assignedWorkouts" inverseEntity="Client"/>
+        <relationship name="workoutTemplate" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutTemplate" inverseName="assignedWorkouts" inverseEntity="WorkoutTemplate"/>
+        <relationship name="workoutSession" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="WorkoutSession" inverseName="assignedWorkout" inverseEntity="WorkoutSession"/>
+    </entity>
+    
+    <!-- WorkoutSession Entity -->
+    <entity name="WorkoutSession" representedClassName="WorkoutSession" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="startTime" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="endTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="status" optional="NO" attributeType="String" defaultValue="in_progress"/>
+        <attribute name="totalDuration" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="caloriesBurned" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="rating" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="workoutSessions" inverseEntity="User"/>
+        <relationship name="assignedWorkout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AssignedWorkout" inverseName="workoutSession" inverseEntity="AssignedWorkout"/>
+        <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WorkoutExercise" inverseName="workoutSession" inverseEntity="WorkoutExercise"/>
+    </entity>
+    
+    <!-- FoodItem Entity -->
+    <entity name="FoodItem" representedClassName="FoodItem" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="NO" attributeType="String"/>
+        <attribute name="brand" optional="YES" attributeType="String"/>
+        <attribute name="category" optional="NO" attributeType="String"/>
+        <attribute name="barcode" optional="YES" attributeType="String"/>
+        <attribute name="caloriesPer100g" optional="NO" attributeType="Double" defaultValue="0.0" usesScalarValueType="YES"/>
+        <attribute name="proteinPer100g" optional="NO" attributeType="Double" defaultValue="0.0" usesScalarValueType="YES"/>
+        <attribute name="carbsPer100g" optional="NO" attributeType="Double" defaultValue="0.0" usesScalarValueType="YES"/>
+        <attribute name="fatPer100g" optional="NO" attributeType="Double" defaultValue="0.0" usesScalarValueType="YES"/>
+        <attribute name="fiberPer100g" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="sugarPer100g" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="sodiumPer100g" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="servingSize" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="servingUnit" optional="YES" attributeType="String"/>
+        <attribute name="isVerified" optional="NO" attributeType="Boolean" defaultValue="NO" usesScalarValueType="YES"/>
+        <attribute name="isCustom" optional="NO" attributeType="Boolean" defaultValue="NO" usesScalarValueType="YES"/>
+        <attribute name="createdAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="nutritionEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="NutritionEntry" inverseName="foodItem" inverseEntity="NutritionEntry"/>
+        <relationship name="mealPlanItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MealPlanItem" inverseName="foodItem" inverseEntity="MealPlanItem"/>
+    </entity>
+    
+    <!-- NutritionEntry Entity -->
+    <entity name="NutritionEntry" representedClassName="NutritionEntry" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="date" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="mealType" optional="NO" attributeType="String"/>
+        <attribute name="quantity" optional="NO" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="unit" optional="NO" attributeType="String"/>
+        <attribute name="calories" optional="NO" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="protein" optional="NO" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="carbs" optional="NO" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="fat" optional="NO" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="fiber" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="sugar" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="sodium" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="nutritionEntries" inverseEntity="User"/>
+        <relationship name="foodItem" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="FoodItem" inverseName="nutritionEntries" inverseEntity="FoodItem"/>
+    </entity>
+    
+    <!-- MealPlanTemplate Entity -->
+    <entity name="MealPlanTemplate" representedClassName="MealPlanTemplate" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="NO" attributeType="String"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="goal" optional="NO" attributeType="String"/>
+        <attribute name="targetCalories" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="targetProtein" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="targetCarbs" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="targetFat" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="duration" optional="NO" attributeType="Integer 16" defaultValue="7" usesScalarValueType="YES"/>
+        <attribute name="isPublic" optional="NO" attributeType="Boolean" defaultValue="NO" usesScalarValueType="YES"/>
+        <attribute name="tags" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="createdAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="coach" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Coach" inverseName="mealPlanTemplates" inverseEntity="Coach"/>
+        <relationship name="meals" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MealPlanItem" inverseName="mealPlanTemplate" inverseEntity="MealPlanItem"/>
+        <relationship name="assignedMealPlans" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="AssignedMealPlan" inverseName="mealPlanTemplate" inverseEntity="AssignedMealPlan"/>
+    </entity>
+    
+    <!-- MealPlanItem Entity -->
+    <entity name="MealPlanItem" representedClassName="MealPlanItem" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="day" optional="NO" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="mealType" optional="NO" attributeType="String"/>
+        <attribute name="quantity" optional="NO" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="unit" optional="NO" attributeType="String"/>
+        <attribute name="orderIndex" optional="NO" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <relationship name="mealPlanTemplate" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="MealPlanTemplate" inverseName="meals" inverseEntity="MealPlanTemplate"/>
+        <relationship name="foodItem" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="FoodItem" inverseName="mealPlanItems" inverseEntity="FoodItem"/>
+    </entity>
+    
+    <!-- AssignedMealPlan Entity -->
+    <entity name="AssignedMealPlan" representedClassName="AssignedMealPlan" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="assignedDate" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="startDate" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="status" optional="NO" attributeType="String" defaultValue="active"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <relationship name="client" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="assignedMealPlans" inverseEntity="Client"/>
+        <relationship name="mealPlanTemplate" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="MealPlanTemplate" inverseName="assignedMealPlans" inverseEntity="MealPlanTemplate"/>
+    </entity>
+    
+    <!-- ProgressEntry Entity -->
+    <entity name="ProgressEntry" representedClassName="ProgressEntry" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="date" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="type" optional="NO" attributeType="String"/>
+        <attribute name="weight" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="bodyFatPercentage" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="muscleMass" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="visceralFat" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="bmi" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="chest" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="waist" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="hips" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="leftArm" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="rightArm" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="leftThigh" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="rightThigh" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="photoURLs" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="progressEntries" inverseEntity="User"/>
+    </entity>
+    
+    <!-- Goal Entity -->
+    <entity name="Goal" representedClassName="Goal" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="title" optional="NO" attributeType="String"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="category" optional="NO" attributeType="String"/>
+        <attribute name="targetValue" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="currentValue" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="unit" optional="YES" attributeType="String"/>
+        <attribute name="startDate" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="targetDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="status" optional="NO" attributeType="String" defaultValue="active"/>
+        <attribute name="priority" optional="NO" attributeType="String" defaultValue="medium"/>
+        <attribute name="isCompleted" optional="NO" attributeType="Boolean" defaultValue="NO" usesScalarValueType="YES"/>
+        <attribute name="completedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="createdAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="goals" inverseEntity="User"/>
+    </entity>
+
+</model>
