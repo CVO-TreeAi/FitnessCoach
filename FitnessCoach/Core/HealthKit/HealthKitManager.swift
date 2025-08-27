@@ -6,11 +6,32 @@ import Combine
 public class HealthKitManager: ObservableObject {
     @Published public var isAuthorized = false
     @Published public var healthStore: HKHealthStore?
+    @Published public var todaysSteps: Int = 0
+    @Published public var todaysActiveEnergy: Double = 0
+    @Published public var todaysActiveMinutes: Int = 0
+    @Published public var heartRate: Double = 0
+    
+    private var cancellables = Set<AnyCancellable>()
     
     public init() {
         if HKHealthStore.isHealthDataAvailable() {
             healthStore = HKHealthStore()
+            setupHealthKitObservers()
         }
+    }
+    
+    private func setupHealthKitObservers() {
+        // Update health data every minute when authorized
+        Timer.publish(every: 60, on: .main, in: .default)
+            .autoconnect()
+            .sink { [weak self] _ in
+                if self?.isAuthorized == true {
+                    Task {
+                        await self?.fetchTodaysHealthData()
+                    }
+                }
+            }
+            .store(in: &cancellables)
     }
     
     public func requestAuthorization() async throws {
@@ -28,6 +49,9 @@ public class HealthKitManager: ObservableObject {
             HKQuantityType.quantityType(forIdentifier: .leanBodyMass)!,
             HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
             HKQuantityType.quantityType(forIdentifier: .basalEnergyBurned)!,
+            HKQuantityType.quantityType(forIdentifier: .stepCount)!,
+            HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!,
+            HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
             HKWorkoutType.workoutType()
         ]
         
@@ -39,6 +63,111 @@ public class HealthKitManager: ObservableObject {
         
         try await healthStore.requestAuthorization(toShare: typesToWrite, read: typesToRead)
         isAuthorized = true
+        
+        // Fetch initial data
+        await fetchTodaysHealthData()
+    }
+    
+    // MARK: - Today's Health Data
+    public func fetchTodaysHealthData() async {
+        guard let healthStore = healthStore, isAuthorized else { return }
+        
+        let calendar = Calendar.current
+        let now = Date()
+        let startOfDay = calendar.startOfDay(for: now)
+        
+        do {
+            // Fetch steps
+            if let steps = try await fetchTodaysStatistic(for: .stepCount, start: startOfDay, end: now) {
+                todaysSteps = Int(steps)
+            }
+            
+            // Fetch active energy
+            if let energy = try await fetchTodaysStatistic(for: .activeEnergyBurned, start: startOfDay, end: now) {
+                todaysActiveEnergy = energy
+            }
+            
+            // Fetch exercise time
+            if let exerciseTime = try await fetchTodaysStatistic(for: .appleExerciseTime, start: startOfDay, end: now) {
+                todaysActiveMinutes = Int(exerciseTime)
+            }
+            
+            // Fetch latest heart rate
+            if let hr = try await fetchLatestHeartRate() {
+                heartRate = hr
+            }
+            
+        } catch {
+            print("Error fetching today's health data: \(error)")
+        }
+    }
+    
+    private func fetchTodaysStatistic(for identifier: HKQuantityTypeIdentifier, start: Date, end: Date) async throws -> Double? {
+        guard let healthStore = healthStore else { return nil }
+        guard let quantityType = HKQuantityType.quantityType(forIdentifier: identifier) else { return nil }
+        
+        let predicate = HKQuery.predicateForSamples(withStart: start, end: end, options: .strictStartDate)
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            let query = HKStatisticsQuery(
+                quantityType: quantityType,
+                quantitySamplePredicate: predicate,
+                options: .cumulativeSum
+            ) { _, statistics, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                let unit: HKUnit
+                switch identifier {
+                case .stepCount:
+                    unit = .count()
+                case .activeEnergyBurned:
+                    unit = .kilocalorie()
+                case .appleExerciseTime:
+                    unit = .minute()
+                default:
+                    unit = .count()
+                }
+                
+                let value = statistics?.sumQuantity()?.doubleValue(for: unit) ?? 0
+                continuation.resume(returning: value)
+            }
+            
+            healthStore.execute(query)
+        }
+    }
+    
+    private func fetchLatestHeartRate() async throws -> Double? {
+        guard let healthStore = healthStore else { return nil }
+        guard let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate) else { return nil }
+        
+        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            let query = HKSampleQuery(
+                sampleType: heartRateType,
+                predicate: nil,
+                limit: 1,
+                sortDescriptors: [sortDescriptor]
+            ) { _, samples, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                guard let sample = samples?.first as? HKQuantitySample else {
+                    continuation.resume(returning: nil)
+                    return
+                }
+                
+                let heartRate = sample.quantity.doubleValue(for: .count().unitDivided(by: .minute()))
+                continuation.resume(returning: heartRate)
+            }
+            
+            healthStore.execute(query)
+        }
     }
     
     // MARK: - Weight Management

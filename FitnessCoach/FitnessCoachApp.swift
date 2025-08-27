@@ -1,5 +1,6 @@
 import SwiftUI
 import CloudKit
+import HealthKit
 
 class SimpleDataManager: ObservableObject {
     @Published var workouts: [WorkoutData] = []
@@ -76,7 +77,7 @@ struct FitnessCoachApp: App {
     @StateObject private var authManager = AuthenticationManager()
     @StateObject private var themeManager = ThemeManager()
     @StateObject private var healthKitManager = HealthKitManager()
-    @StateObject private var dataManager = SimpleDataManager()
+    @StateObject private var dataManager = FitnessDataManager.shared
     
     var body: some Scene {
         WindowGroup {
@@ -86,6 +87,11 @@ struct FitnessCoachApp: App {
                 .environmentObject(healthKitManager)
                 .environmentObject(dataManager)
                 .theme(themeManager.currentTheme)
+                .onReceive(healthKitManager.$isAuthorized) { isAuthorized in
+                    if isAuthorized {
+                        dataManager.syncWithHealthKit(healthKitManager)
+                    }
+                }
         }
     }
     
@@ -108,8 +114,8 @@ struct ContentView: View {
     @Environment(\.theme) private var theme
     
     var body: some View {
-        // Fast loading simple UI with all buttons working
-        SimpleWorkingApp()
+        // Complete functional FitnessCoach app with all features
+        CompleteFunctionalTabView()
     }
 }
 
