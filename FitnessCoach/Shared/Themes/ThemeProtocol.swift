@@ -285,6 +285,9 @@ public struct ThemeLayout {
 
 // MARK: - Theme Protocol Extensions for Convenience
 public extension ThemeProtocol {
+    // Shadow color convenience accessor
+    var shadowColor: Color { Color.black.opacity(0.1) }
+    
     // Typography convenience accessors
     var titleSmallFont: Font { typography.titleSmall }
     var bodySmallFont: Font { typography.bodySmall }
