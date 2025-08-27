@@ -6,7 +6,7 @@
 	<integer>11</integer>
 	<key>logs</key>
 	<dict>
-		<key>030640CF-FFD5-4206-92D5-02E16FDDD5F9</key>
+		<key>FA0C81F6-05E0-4A3F-884E-4CF3CAC2852A</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>030640CF-FFD5-4206-92D5-02E16FDDD5F9.xcactivitylog</string>
+			<string>FA0C81F6-05E0-4A3F-884E-4CF3CAC2852A.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -40,55 +40,13 @@
 			<key>signature</key>
 			<string>Cleaning project FitnessCoach with scheme FitnessCoach and configuration Debug</string>
 			<key>timeStartedRecording</key>
-			<real>777999170.092834</real>
+			<real>778000256.34623802</real>
 			<key>timeStoppedRecording</key>
-			<real>777999170.44609797</real>
+			<real>778000256.74689305</real>
 			<key>title</key>
 			<string>Cleaning project FitnessCoach with scheme FitnessCoach and configuration Debug</string>
 			<key>uniqueIdentifier</key>
-			<string>030640CF-FFD5-4206-92D5-02E16FDDD5F9</string>
-		</dict>
-		<key>90C7C115-4E4D-40D7-8BAC-A3727CD877D5</key>
-		<dict>
-			<key>className</key>
-			<string>IDECommandLineBuildLog</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>90C7C115-4E4D-40D7-8BAC-A3727CD877D5.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>E</string>
-				<key>totalNumberOfAnalyzerIssues</key>
-				<integer>0</integer>
-				<key>totalNumberOfErrors</key>
-				<integer>8</integer>
-				<key>totalNumberOfTestFailures</key>
-				<integer>0</integer>
-				<key>totalNumberOfWarnings</key>
-				<integer>9</integer>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>FitnessCoach project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>FitnessCoach</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Building project FitnessCoach with scheme FitnessCoach and configuration Debug</string>
-			<key>timeStartedRecording</key>
-			<real>777999031.53149295</real>
-			<key>timeStoppedRecording</key>
-			<real>777999038.64564705</real>
-			<key>title</key>
-			<string>Building project FitnessCoach with scheme FitnessCoach and configuration Debug</string>
-			<key>uniqueIdentifier</key>
-			<string>90C7C115-4E4D-40D7-8BAC-A3727CD877D5</string>
+			<string>FA0C81F6-05E0-4A3F-884E-4CF3CAC2852A</string>
 		</dict>
 	</dict>
 </dict>

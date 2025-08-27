@@ -65,7 +65,7 @@ public class HealthKitManager: ObservableObject {
         
         let weightType = HKQuantityType.quantityType(forIdentifier: .bodyMass)!
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
-        let query = HKSampleQuery(
+        _ = HKSampleQuery(
             sampleType: weightType,
             predicate: nil,
             limit: 1,

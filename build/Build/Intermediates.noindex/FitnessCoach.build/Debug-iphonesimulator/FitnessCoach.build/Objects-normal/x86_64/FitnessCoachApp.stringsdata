@@ -1,0 +1,432 @@
+{
+  "source": "/Users/ain/FitnessCoach/FitnessCoach/FitnessCoachApp.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "FitnessCoach",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 174
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quick Actions",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Water: %lld/8 cups",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 157
+        }
+      },
+      {
+        "comment": "",
+        "key": "Home",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 176
+        }
+      },
+      {
+        "comment": "",
+        "key": "Workouts",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 209
+        }
+      },
+      {
+        "comment": "",
+        "key": "Create Workout",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 186
+        }
+      },
+      {
+        "comment": "",
+        "key": "StrongLifts 5×5",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 198
+        }
+      },
+      {
+        "comment": "",
+        "key": "Workouts",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 211
+        }
+      },
+      {
+        "comment": "",
+        "key": "Weight Entry",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 273
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 274
+        }
+      },
+      {
+        "comment": "",
+        "key": "Weight",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 258
+        }
+      },
+      {
+        "comment": "",
+        "key": "Save",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 263
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 292
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quick Workout",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 285
+        }
+      },
+      {
+        "comment": "",
+        "key": "Start Full Body",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 286
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 309
+        }
+      },
+      {
+        "comment": "",
+        "key": "Log Food",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 302
+        }
+      },
+      {
+        "comment": "",
+        "key": "Add Meal",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 303
+        }
+      },
+      {
+        "comment": "",
+        "key": "Close",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 330
+        }
+      },
+      {
+        "comment": "",
+        "key": "StrongLifts 5×5",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 319
+        }
+      },
+      {
+        "comment": "",
+        "key": "Squat: 5×5 @ 135 lbs",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 320
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bench: 5×5 @ 95 lbs",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 321
+        }
+      },
+      {
+        "comment": "",
+        "key": "Row: 5×5 @ 95 lbs",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 322
+        }
+      },
+      {
+        "comment": "",
+        "key": "Complete Workout",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 323
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 347
+        }
+      },
+      {
+        "comment": "",
+        "key": "Create Workout",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 340
+        }
+      },
+      {
+        "comment": "",
+        "key": "Save Workout",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 341
+        }
+      },
+      {
+        "comment": "",
+        "key": "Loading...",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 363
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dashboard",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 382
+        }
+      },
+      {
+        "comment": "",
+        "key": "Progress",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 388
+        }
+      },
+      {
+        "comment": "",
+        "key": "Workouts",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 394
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nutrition",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 400
+        }
+      },
+      {
+        "comment": "",
+        "key": "Clients",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 407
+        }
+      },
+      {
+        "comment": "",
+        "key": "Welcome to FitnessCoach",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 424
+        }
+      },
+      {
+        "comment": "",
+        "key": "Clients View - Coming Soon",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 442
+        }
+      },
+      {
+        "comment": "",
+        "key": "Clients",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 443
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dashboard",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 480
+        }
+      },
+      {
+        "comment": "",
+        "key": "JD",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 503
+        }
+      },
+      {
+        "comment": "",
+        "key": "Let's crush your goals today!",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 492
+        }
+      },
+      {
+        "comment": "",
+        "key": "Today's Progress",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 558
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quick Actions",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 577
+        }
+      },
+      {
+        "comment": "",
+        "key": "Workouts",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 654
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nutrition",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 727
+        }
+      },
+      {
+        "comment": "",
+        "key": "Today's Summary",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 674
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld / 2200 cal",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 677
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meals",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 698
+        }
+      },
+      {
+        "comment": "",
+        "key": "Water Intake",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 709
+        }
+      },
+      {
+        "comment": "",
+        "key": "•",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 891
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%@",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 924
+        }
+      },
+      {
+        "comment": "",
+        "key": "/ %lld",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 929
+        }
+      },
+      {
+        "comment": "",
+        "key": "No items logged",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 964
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld cal",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 955
+        }
+      },
+      {
+        "comment": "",
+        "key": "• %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 971
+        }
+      }
+    ]
+  },
+  "version": 1
+}
