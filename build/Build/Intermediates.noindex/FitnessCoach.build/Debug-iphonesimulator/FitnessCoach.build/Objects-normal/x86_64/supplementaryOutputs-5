@@ -1,0 +1,24 @@
+"/Users/ain/FitnessCoach/FitnessCoach/Shared/Views/ThemedCard.swift":
+  dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ThemedCard.d"
+  diagnostics: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ThemedCard.dia"
+  const-values: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ThemedCard.swiftconstvalues"
+  swift-dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ThemedCard.swiftdeps"
+  object: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ThemedCard.o"
+"/Users/ain/FitnessCoach/FitnessCoach/Features/Progress/ProgressTrackingView.swift":
+  const-values: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ProgressTrackingView.swiftconstvalues"
+  diagnostics: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ProgressTrackingView.dia"
+  dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ProgressTrackingView.d"
+  swift-dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ProgressTrackingView.swiftdeps"
+  object: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ProgressTrackingView.o"
+"/Users/ain/FitnessCoach/FitnessCoach/Shared/Models/UserRole.swift":
+  object: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/UserRole.o"
+  const-values: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/UserRole.swiftconstvalues"
+  dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/UserRole.d"
+  diagnostics: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/UserRole.dia"
+  swift-dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/UserRole.swiftdeps"
+"/Users/ain/FitnessCoach/FitnessCoach/Features/Progress/ProgressTrackingViewModel.swift":
+  object: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ProgressTrackingViewModel.o"
+  dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ProgressTrackingViewModel.d"
+  const-values: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ProgressTrackingViewModel.swiftconstvalues"
+  diagnostics: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ProgressTrackingViewModel.dia"
+  swift-dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/ProgressTrackingViewModel.swiftdeps"

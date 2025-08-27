@@ -282,6 +282,8 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
 @import AuthenticationServices;
+@import CoreData;
+@import Foundation;
 @import ObjectiveC;
 #endif
 
@@ -305,6 +307,47 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
+@class NSEntityDescription;
+@class NSManagedObjectContext;
+SWIFT_CLASS_NAMED("AssignedMealPlan")
+@interface AssignedMealPlan : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class NSUUID;
+@class NSDate;
+@class NSString;
+@class Client;
+@class MealPlanTemplate;
+@interface AssignedMealPlan (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSDate * _Nullable assignedDate;
+@property (nonatomic, copy) NSDate * _Nullable startDate;
+@property (nonatomic, copy) NSDate * _Nullable endDate;
+@property (nonatomic, copy) NSString * _Nullable status;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic, strong) Client * _Nullable client;
+@property (nonatomic, strong) MealPlanTemplate * _Nullable mealPlanTemplate;
+@end
+
+SWIFT_CLASS_NAMED("AssignedWorkout")
+@interface AssignedWorkout : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class WorkoutTemplate;
+@class WorkoutSession;
+@interface AssignedWorkout (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSDate * _Nullable assignedDate;
+@property (nonatomic, copy) NSDate * _Nullable scheduledDate;
+@property (nonatomic, copy) NSString * _Nullable status;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic, strong) Client * _Nullable client;
+@property (nonatomic, strong) WorkoutTemplate * _Nullable workoutTemplate;
+@property (nonatomic, strong) WorkoutSession * _Nullable workoutSession;
+@end
+
 SWIFT_CLASS("_TtC12FitnessCoach21AuthenticationManager")
 @interface AuthenticationManager : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -319,6 +362,1206 @@ SWIFT_CLASS("_TtC12FitnessCoach21AuthenticationManager")
 @interface AuthenticationManager (SWIFT_EXTENSION(FitnessCoach)) <ASAuthorizationControllerDelegate>
 - (void)authorizationController:(ASAuthorizationController * _Nonnull)controller didCompleteWithAuthorization:(ASAuthorization * _Nonnull)authorization;
 - (void)authorizationController:(ASAuthorizationController * _Nonnull)controller didCompleteWithError:(NSError * _Nonnull)error;
+@end
+
+SWIFT_CLASS_NAMED("Client")
+@interface Client : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class NSSet;
+@interface Client (SWIFT_EXTENSION(FitnessCoach))
+- (void)addAssignedWorkoutsObject:(AssignedWorkout * _Nonnull)value;
+- (void)removeAssignedWorkoutsObject:(AssignedWorkout * _Nonnull)value;
+- (void)addAssignedWorkouts:(NSSet * _Nonnull)values;
+- (void)removeAssignedWorkouts:(NSSet * _Nonnull)values;
+@end
+
+@interface Client (SWIFT_EXTENSION(FitnessCoach))
+- (void)addAssignedMealPlansObject:(AssignedMealPlan * _Nonnull)value;
+- (void)removeAssignedMealPlansObject:(AssignedMealPlan * _Nonnull)value;
+- (void)addAssignedMealPlans:(NSSet * _Nonnull)values;
+- (void)removeAssignedMealPlans:(NSSet * _Nonnull)values;
+@end
+
+@class User;
+@class Coach;
+@interface Client (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic) double startWeight;
+@property (nonatomic) double goalWeight;
+@property (nonatomic, copy) NSDate * _Nullable startDate;
+@property (nonatomic, copy) NSDate * _Nullable targetDate;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable medicalConditions;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable injuries;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable preferences;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic) BOOL isActive;
+@property (nonatomic, strong) User * _Nullable user;
+@property (nonatomic, strong) Coach * _Nullable coach;
+@property (nonatomic, strong) NSSet * _Nullable assignedWorkouts;
+@property (nonatomic, strong) NSSet * _Nullable assignedMealPlans;
+@end
+
+SWIFT_CLASS_NAMED("Coach")
+@interface Coach : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface Coach (SWIFT_EXTENSION(FitnessCoach))
+- (void)addWorkoutTemplatesObject:(WorkoutTemplate * _Nonnull)value;
+- (void)removeWorkoutTemplatesObject:(WorkoutTemplate * _Nonnull)value;
+- (void)addWorkoutTemplates:(NSSet * _Nonnull)values;
+- (void)removeWorkoutTemplates:(NSSet * _Nonnull)values;
+@end
+
+@interface Coach (SWIFT_EXTENSION(FitnessCoach))
+- (void)addClientsObject:(Client * _Nonnull)value;
+- (void)removeClientsObject:(Client * _Nonnull)value;
+- (void)addClients:(NSSet * _Nonnull)values;
+- (void)removeClients:(NSSet * _Nonnull)values;
+@end
+
+@interface Coach (SWIFT_EXTENSION(FitnessCoach))
+- (void)addMealPlanTemplatesObject:(MealPlanTemplate * _Nonnull)value;
+- (void)removeMealPlanTemplatesObject:(MealPlanTemplate * _Nonnull)value;
+- (void)addMealPlanTemplates:(NSSet * _Nonnull)values;
+- (void)removeMealPlanTemplates:(NSSet * _Nonnull)values;
+@end
+
+@interface Coach (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable businessName;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable certifications;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable specializations;
+@property (nonatomic) int16_t yearsOfExperience;
+@property (nonatomic, copy) NSString * _Nullable bio;
+@property (nonatomic) double hourlyRate;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, strong) User * _Nullable user;
+@property (nonatomic, strong) NSSet * _Nullable clients;
+@property (nonatomic, strong) NSSet * _Nullable workoutTemplates;
+@property (nonatomic, strong) NSSet * _Nullable mealPlanTemplates;
+@end
+
+SWIFT_CLASS_NAMED("Exercise")
+@interface Exercise : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class WorkoutExercise;
+@interface Exercise (SWIFT_EXTENSION(FitnessCoach))
+- (void)addWorkoutExercisesObject:(WorkoutExercise * _Nonnull)value;
+- (void)removeWorkoutExercisesObject:(WorkoutExercise * _Nonnull)value;
+- (void)addWorkoutExercises:(NSSet * _Nonnull)values;
+- (void)removeWorkoutExercises:(NSSet * _Nonnull)values;
+@end
+
+@interface Exercise (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable name;
+@property (nonatomic, copy) NSString * _Nullable category;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable muscleGroups;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable equipment;
+@property (nonatomic, copy) NSString * _Nullable instructions;
+@property (nonatomic, copy) NSString * _Nullable difficulty;
+@property (nonatomic, copy) NSString * _Nullable videoURL;
+@property (nonatomic, copy) NSString * _Nullable imageURL;
+@property (nonatomic) BOOL isCustom;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, strong) NSSet * _Nullable workoutExercises;
+@end
+
+SWIFT_CLASS_NAMED("FoodItem")
+@interface FoodItem : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class MealPlanItem;
+@interface FoodItem (SWIFT_EXTENSION(FitnessCoach))
+- (void)addMealPlanItemsObject:(MealPlanItem * _Nonnull)value;
+- (void)removeMealPlanItemsObject:(MealPlanItem * _Nonnull)value;
+- (void)addMealPlanItems:(NSSet * _Nonnull)values;
+- (void)removeMealPlanItems:(NSSet * _Nonnull)values;
+@end
+
+@class NutritionEntry;
+@interface FoodItem (SWIFT_EXTENSION(FitnessCoach))
+- (void)addNutritionEntriesObject:(NutritionEntry * _Nonnull)value;
+- (void)removeNutritionEntriesObject:(NutritionEntry * _Nonnull)value;
+- (void)addNutritionEntries:(NSSet * _Nonnull)values;
+- (void)removeNutritionEntries:(NSSet * _Nonnull)values;
+@end
+
+@interface FoodItem (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable name;
+@property (nonatomic, copy) NSString * _Nullable brand;
+@property (nonatomic, copy) NSString * _Nullable category;
+@property (nonatomic, copy) NSString * _Nullable barcode;
+@property (nonatomic) double caloriesPer100g;
+@property (nonatomic) double proteinPer100g;
+@property (nonatomic) double carbsPer100g;
+@property (nonatomic) double fatPer100g;
+@property (nonatomic) double fiberPer100g;
+@property (nonatomic) double sugarPer100g;
+@property (nonatomic) double sodiumPer100g;
+@property (nonatomic) double servingSize;
+@property (nonatomic, copy) NSString * _Nullable servingUnit;
+@property (nonatomic) BOOL isVerified;
+@property (nonatomic) BOOL isCustom;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, strong) NSSet * _Nullable nutritionEntries;
+@property (nonatomic, strong) NSSet * _Nullable mealPlanItems;
+@end
+
+SWIFT_CLASS_NAMED("Goal")
+@interface Goal : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface Goal (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable title;
+@property (nonatomic, copy) NSString * _Nullable desc;
+@property (nonatomic, copy) NSString * _Nullable category;
+@property (nonatomic) double targetValue;
+@property (nonatomic) double currentValue;
+@property (nonatomic, copy) NSString * _Nullable unit;
+@property (nonatomic, copy) NSDate * _Nullable startDate;
+@property (nonatomic, copy) NSDate * _Nullable targetDate;
+@property (nonatomic, copy) NSString * _Nullable status;
+@property (nonatomic, copy) NSString * _Nullable priority;
+@property (nonatomic) BOOL isCompleted;
+@property (nonatomic, copy) NSDate * _Nullable completedDate;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, strong) User * _Nullable user;
+@end
+
+SWIFT_CLASS_NAMED("MealPlanItem")
+@interface MealPlanItem : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface MealPlanItem (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic) int16_t day;
+@property (nonatomic, copy) NSString * _Nullable mealType;
+@property (nonatomic) double quantity;
+@property (nonatomic, copy) NSString * _Nullable unit;
+@property (nonatomic) int16_t orderIndex;
+@property (nonatomic, strong) MealPlanTemplate * _Nullable mealPlanTemplate;
+@property (nonatomic, strong) FoodItem * _Nullable foodItem;
+@end
+
+SWIFT_CLASS_NAMED("MealPlanTemplate")
+@interface MealPlanTemplate : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface MealPlanTemplate (SWIFT_EXTENSION(FitnessCoach))
+- (void)addAssignedMealPlansObject:(AssignedMealPlan * _Nonnull)value;
+- (void)removeAssignedMealPlansObject:(AssignedMealPlan * _Nonnull)value;
+- (void)addAssignedMealPlans:(NSSet * _Nonnull)values;
+- (void)removeAssignedMealPlans:(NSSet * _Nonnull)values;
+@end
+
+@interface MealPlanTemplate (SWIFT_EXTENSION(FitnessCoach))
+- (void)addMealsObject:(MealPlanItem * _Nonnull)value;
+- (void)removeMealsObject:(MealPlanItem * _Nonnull)value;
+- (void)addMeals:(NSSet * _Nonnull)values;
+- (void)removeMeals:(NSSet * _Nonnull)values;
+@end
+
+@interface MealPlanTemplate (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable name;
+@property (nonatomic, copy) NSString * _Nullable desc;
+@property (nonatomic, copy) NSString * _Nullable goal;
+@property (nonatomic) int16_t targetCalories;
+@property (nonatomic) int16_t targetProtein;
+@property (nonatomic) int16_t targetCarbs;
+@property (nonatomic) int16_t targetFat;
+@property (nonatomic) int16_t duration;
+@property (nonatomic) BOOL isPublic;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable tags;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, strong) Coach * _Nullable coach;
+@property (nonatomic, strong) NSSet * _Nullable meals;
+@property (nonatomic, strong) NSSet * _Nullable assignedMealPlans;
+@end
+
+SWIFT_CLASS_NAMED("NutritionEntry")
+@interface NutritionEntry : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface NutritionEntry (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSDate * _Nullable date;
+@property (nonatomic, copy) NSString * _Nullable mealType;
+@property (nonatomic) double quantity;
+@property (nonatomic, copy) NSString * _Nullable unit;
+@property (nonatomic) double calories;
+@property (nonatomic) double protein;
+@property (nonatomic) double carbs;
+@property (nonatomic) double fat;
+@property (nonatomic) double fiber;
+@property (nonatomic) double sugar;
+@property (nonatomic) double sodium;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic, strong) User * _Nullable user;
+@property (nonatomic, strong) FoodItem * _Nullable foodItem;
+@end
+
+SWIFT_CLASS_NAMED("ProgressEntry")
+@interface ProgressEntry : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface ProgressEntry (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSDate * _Nullable date;
+@property (nonatomic, copy) NSString * _Nullable type;
+@property (nonatomic) double weight;
+@property (nonatomic) double bodyFatPercentage;
+@property (nonatomic) double muscleMass;
+@property (nonatomic) double visceralFat;
+@property (nonatomic) double bmi;
+@property (nonatomic) double chest;
+@property (nonatomic) double waist;
+@property (nonatomic) double hips;
+@property (nonatomic) double leftArm;
+@property (nonatomic) double rightArm;
+@property (nonatomic) double leftThigh;
+@property (nonatomic) double rightThigh;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable photoURLs;
+@property (nonatomic, strong) User * _Nullable user;
+@end
+
+SWIFT_CLASS_NAMED("User")
+@interface User : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface User (SWIFT_EXTENSION(FitnessCoach))
+- (void)addWorkoutSessionsObject:(WorkoutSession * _Nonnull)value;
+- (void)removeWorkoutSessionsObject:(WorkoutSession * _Nonnull)value;
+- (void)addWorkoutSessions:(NSSet * _Nonnull)values;
+- (void)removeWorkoutSessions:(NSSet * _Nonnull)values;
+@end
+
+@interface User (SWIFT_EXTENSION(FitnessCoach))
+- (void)addProgressEntriesObject:(ProgressEntry * _Nonnull)value;
+- (void)removeProgressEntriesObject:(ProgressEntry * _Nonnull)value;
+- (void)addProgressEntries:(NSSet * _Nonnull)values;
+- (void)removeProgressEntries:(NSSet * _Nonnull)values;
+@end
+
+@interface User (SWIFT_EXTENSION(FitnessCoach))
+- (void)addGoalsObject:(Goal * _Nonnull)value;
+- (void)removeGoalsObject:(Goal * _Nonnull)value;
+- (void)addGoals:(NSSet * _Nonnull)values;
+- (void)removeGoals:(NSSet * _Nonnull)values;
+@end
+
+@interface User (SWIFT_EXTENSION(FitnessCoach))
+- (void)addNutritionEntriesObject:(NutritionEntry * _Nonnull)value;
+- (void)removeNutritionEntriesObject:(NutritionEntry * _Nonnull)value;
+- (void)addNutritionEntries:(NSSet * _Nonnull)values;
+- (void)removeNutritionEntries:(NSSet * _Nonnull)values;
+@end
+
+@interface User (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable userIdentifier;
+@property (nonatomic, copy) NSString * _Nullable email;
+@property (nonatomic, copy) NSString * _Nullable firstName;
+@property (nonatomic, copy) NSString * _Nullable lastName;
+@property (nonatomic, copy) NSString * _Nullable role;
+@property (nonatomic, copy) NSDate * _Nullable dateOfBirth;
+@property (nonatomic) double height;
+@property (nonatomic, copy) NSString * _Nullable gender;
+@property (nonatomic, copy) NSString * _Nullable activityLevel;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable fitnessGoals;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, copy) NSDate * _Nullable updatedAt;
+@property (nonatomic) BOOL isActive;
+@property (nonatomic, strong) Coach * _Nullable coachProfile;
+@property (nonatomic, strong) Client * _Nullable clientProfile;
+@property (nonatomic, strong) NSSet * _Nullable workoutSessions;
+@property (nonatomic, strong) NSSet * _Nullable nutritionEntries;
+@property (nonatomic, strong) NSSet * _Nullable progressEntries;
+@property (nonatomic, strong) NSSet * _Nullable goals;
+@end
+
+SWIFT_CLASS_NAMED("WorkoutExercise")
+@interface WorkoutExercise : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface WorkoutExercise (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic) int16_t orderIndex;
+@property (nonatomic) int16_t sets;
+@property (nonatomic) int16_t reps;
+@property (nonatomic) double weight;
+@property (nonatomic) int16_t duration;
+@property (nonatomic) double distance;
+@property (nonatomic) int16_t restTime;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic, strong) Exercise * _Nullable exercise;
+@property (nonatomic, strong) WorkoutTemplate * _Nullable workoutTemplate;
+@property (nonatomic, strong) WorkoutSession * _Nullable workoutSession;
+@end
+
+SWIFT_CLASS_NAMED("WorkoutSession")
+@interface WorkoutSession : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface WorkoutSession (SWIFT_EXTENSION(FitnessCoach))
+- (void)addExercisesObject:(WorkoutExercise * _Nonnull)value;
+- (void)removeExercisesObject:(WorkoutExercise * _Nonnull)value;
+- (void)addExercises:(NSSet * _Nonnull)values;
+- (void)removeExercises:(NSSet * _Nonnull)values;
+@end
+
+@interface WorkoutSession (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSDate * _Nullable startTime;
+@property (nonatomic, copy) NSDate * _Nullable endTime;
+@property (nonatomic, copy) NSString * _Nullable status;
+@property (nonatomic) int16_t totalDuration;
+@property (nonatomic) int16_t caloriesBurned;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic) int16_t rating;
+@property (nonatomic, strong) User * _Nullable user;
+@property (nonatomic, strong) AssignedWorkout * _Nullable assignedWorkout;
+@property (nonatomic, strong) NSSet * _Nullable exercises;
+@end
+
+SWIFT_CLASS_NAMED("WorkoutTemplate")
+@interface WorkoutTemplate : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface WorkoutTemplate (SWIFT_EXTENSION(FitnessCoach))
+- (void)addExercisesObject:(WorkoutExercise * _Nonnull)value;
+- (void)removeExercisesObject:(WorkoutExercise * _Nonnull)value;
+- (void)addExercises:(NSSet * _Nonnull)values;
+- (void)removeExercises:(NSSet * _Nonnull)values;
+@end
+
+@interface WorkoutTemplate (SWIFT_EXTENSION(FitnessCoach))
+- (void)addAssignedWorkoutsObject:(AssignedWorkout * _Nonnull)value;
+- (void)removeAssignedWorkoutsObject:(AssignedWorkout * _Nonnull)value;
+- (void)addAssignedWorkouts:(NSSet * _Nonnull)values;
+- (void)removeAssignedWorkouts:(NSSet * _Nonnull)values;
+@end
+
+@interface WorkoutTemplate (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable name;
+@property (nonatomic, copy) NSString * _Nullable desc;
+@property (nonatomic, copy) NSString * _Nullable category;
+@property (nonatomic, copy) NSString * _Nullable difficulty;
+@property (nonatomic) int16_t estimatedDuration;
+@property (nonatomic) int16_t caloriesBurned;
+@property (nonatomic) BOOL isPublic;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable tags;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, strong) Coach * _Nullable coach;
+@property (nonatomic, strong) NSSet * _Nullable exercises;
+@property (nonatomic, strong) NSSet * _Nullable assignedWorkouts;
+@end
+
+#endif
+#if __has_attribute(external_source_symbol)
+# pragma clang attribute pop
+#endif
+#if defined(__cplusplus)
+#endif
+#pragma clang diagnostic pop
+#endif
+
+#elif defined(__x86_64__) && __x86_64__
+// Generated by Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+#ifndef FITNESSCOACH_SWIFT_H
+#define FITNESSCOACH_SWIFT_H
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wgcc-compat"
+
+#if !defined(__has_include)
+# define __has_include(x) 0
+#endif
+#if !defined(__has_attribute)
+# define __has_attribute(x) 0
+#endif
+#if !defined(__has_feature)
+# define __has_feature(x) 0
+#endif
+#if !defined(__has_warning)
+# define __has_warning(x) 0
+#endif
+
+#if __has_include(<swift/objc-prologue.h>)
+# include <swift/objc-prologue.h>
+#endif
+
+#pragma clang diagnostic ignored "-Wauto-import"
+#if defined(__OBJC__)
+#include <Foundation/Foundation.h>
+#endif
+#if defined(__cplusplus)
+#include <cstdint>
+#include <cstddef>
+#include <cstdbool>
+#include <cstring>
+#include <stdlib.h>
+#include <new>
+#include <type_traits>
+#else
+#include <stdint.h>
+#include <stddef.h>
+#include <stdbool.h>
+#include <string.h>
+#endif
+#if defined(__cplusplus)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnon-modular-include-in-framework-module"
+#if defined(__arm64e__) && __has_include(<ptrauth.h>)
+# include <ptrauth.h>
+#else
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wreserved-macro-identifier"
+# ifndef __ptrauth_swift_value_witness_function_pointer
+#  define __ptrauth_swift_value_witness_function_pointer(x)
+# endif
+# ifndef __ptrauth_swift_class_method_pointer
+#  define __ptrauth_swift_class_method_pointer(x)
+# endif
+#pragma clang diagnostic pop
+#endif
+#pragma clang diagnostic pop
+#endif
+
+#if !defined(SWIFT_TYPEDEFS)
+# define SWIFT_TYPEDEFS 1
+# if __has_include(<uchar.h>)
+#  include <uchar.h>
+# elif !defined(__cplusplus)
+typedef unsigned char char8_t;
+typedef uint_least16_t char16_t;
+typedef uint_least32_t char32_t;
+# endif
+typedef float swift_float2  __attribute__((__ext_vector_type__(2)));
+typedef float swift_float3  __attribute__((__ext_vector_type__(3)));
+typedef float swift_float4  __attribute__((__ext_vector_type__(4)));
+typedef double swift_double2  __attribute__((__ext_vector_type__(2)));
+typedef double swift_double3  __attribute__((__ext_vector_type__(3)));
+typedef double swift_double4  __attribute__((__ext_vector_type__(4)));
+typedef int swift_int2  __attribute__((__ext_vector_type__(2)));
+typedef int swift_int3  __attribute__((__ext_vector_type__(3)));
+typedef int swift_int4  __attribute__((__ext_vector_type__(4)));
+typedef unsigned int swift_uint2  __attribute__((__ext_vector_type__(2)));
+typedef unsigned int swift_uint3  __attribute__((__ext_vector_type__(3)));
+typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
+#endif
+
+#if !defined(SWIFT_PASTE)
+# define SWIFT_PASTE_HELPER(x, y) x##y
+# define SWIFT_PASTE(x, y) SWIFT_PASTE_HELPER(x, y)
+#endif
+#if !defined(SWIFT_METATYPE)
+# define SWIFT_METATYPE(X) Class
+#endif
+#if !defined(SWIFT_CLASS_PROPERTY)
+# if __has_feature(objc_class_property)
+#  define SWIFT_CLASS_PROPERTY(...) __VA_ARGS__
+# else
+#  define SWIFT_CLASS_PROPERTY(...) 
+# endif
+#endif
+#if !defined(SWIFT_RUNTIME_NAME)
+# if __has_attribute(objc_runtime_name)
+#  define SWIFT_RUNTIME_NAME(X) __attribute__((objc_runtime_name(X)))
+# else
+#  define SWIFT_RUNTIME_NAME(X) 
+# endif
+#endif
+#if !defined(SWIFT_COMPILE_NAME)
+# if __has_attribute(swift_name)
+#  define SWIFT_COMPILE_NAME(X) __attribute__((swift_name(X)))
+# else
+#  define SWIFT_COMPILE_NAME(X) 
+# endif
+#endif
+#if !defined(SWIFT_METHOD_FAMILY)
+# if __has_attribute(objc_method_family)
+#  define SWIFT_METHOD_FAMILY(X) __attribute__((objc_method_family(X)))
+# else
+#  define SWIFT_METHOD_FAMILY(X) 
+# endif
+#endif
+#if !defined(SWIFT_NOESCAPE)
+# if __has_attribute(noescape)
+#  define SWIFT_NOESCAPE __attribute__((noescape))
+# else
+#  define SWIFT_NOESCAPE 
+# endif
+#endif
+#if !defined(SWIFT_RELEASES_ARGUMENT)
+# if __has_attribute(ns_consumed)
+#  define SWIFT_RELEASES_ARGUMENT __attribute__((ns_consumed))
+# else
+#  define SWIFT_RELEASES_ARGUMENT 
+# endif
+#endif
+#if !defined(SWIFT_WARN_UNUSED_RESULT)
+# if __has_attribute(warn_unused_result)
+#  define SWIFT_WARN_UNUSED_RESULT __attribute__((warn_unused_result))
+# else
+#  define SWIFT_WARN_UNUSED_RESULT 
+# endif
+#endif
+#if !defined(SWIFT_NORETURN)
+# if __has_attribute(noreturn)
+#  define SWIFT_NORETURN __attribute__((noreturn))
+# else
+#  define SWIFT_NORETURN 
+# endif
+#endif
+#if !defined(SWIFT_CLASS_EXTRA)
+# define SWIFT_CLASS_EXTRA 
+#endif
+#if !defined(SWIFT_PROTOCOL_EXTRA)
+# define SWIFT_PROTOCOL_EXTRA 
+#endif
+#if !defined(SWIFT_ENUM_EXTRA)
+# define SWIFT_ENUM_EXTRA 
+#endif
+#if !defined(SWIFT_CLASS)
+# if __has_attribute(objc_subclassing_restricted)
+#  define SWIFT_CLASS(SWIFT_NAME) SWIFT_RUNTIME_NAME(SWIFT_NAME) __attribute__((objc_subclassing_restricted)) SWIFT_CLASS_EXTRA
+#  define SWIFT_CLASS_NAMED(SWIFT_NAME) __attribute__((objc_subclassing_restricted)) SWIFT_COMPILE_NAME(SWIFT_NAME) SWIFT_CLASS_EXTRA
+# else
+#  define SWIFT_CLASS(SWIFT_NAME) SWIFT_RUNTIME_NAME(SWIFT_NAME) SWIFT_CLASS_EXTRA
+#  define SWIFT_CLASS_NAMED(SWIFT_NAME) SWIFT_COMPILE_NAME(SWIFT_NAME) SWIFT_CLASS_EXTRA
+# endif
+#endif
+#if !defined(SWIFT_RESILIENT_CLASS)
+# if __has_attribute(objc_class_stub)
+#  define SWIFT_RESILIENT_CLASS(SWIFT_NAME) SWIFT_CLASS(SWIFT_NAME) __attribute__((objc_class_stub))
+#  define SWIFT_RESILIENT_CLASS_NAMED(SWIFT_NAME) __attribute__((objc_class_stub)) SWIFT_CLASS_NAMED(SWIFT_NAME)
+# else
+#  define SWIFT_RESILIENT_CLASS(SWIFT_NAME) SWIFT_CLASS(SWIFT_NAME)
+#  define SWIFT_RESILIENT_CLASS_NAMED(SWIFT_NAME) SWIFT_CLASS_NAMED(SWIFT_NAME)
+# endif
+#endif
+#if !defined(SWIFT_PROTOCOL)
+# define SWIFT_PROTOCOL(SWIFT_NAME) SWIFT_RUNTIME_NAME(SWIFT_NAME) SWIFT_PROTOCOL_EXTRA
+# define SWIFT_PROTOCOL_NAMED(SWIFT_NAME) SWIFT_COMPILE_NAME(SWIFT_NAME) SWIFT_PROTOCOL_EXTRA
+#endif
+#if !defined(SWIFT_EXTENSION)
+# define SWIFT_EXTENSION(M) SWIFT_PASTE(M##_Swift_, __LINE__)
+#endif
+#if !defined(OBJC_DESIGNATED_INITIALIZER)
+# if __has_attribute(objc_designated_initializer)
+#  define OBJC_DESIGNATED_INITIALIZER __attribute__((objc_designated_initializer))
+# else
+#  define OBJC_DESIGNATED_INITIALIZER 
+# endif
+#endif
+#if !defined(SWIFT_ENUM_ATTR)
+# if __has_attribute(enum_extensibility)
+#  define SWIFT_ENUM_ATTR(_extensibility) __attribute__((enum_extensibility(_extensibility)))
+# else
+#  define SWIFT_ENUM_ATTR(_extensibility) 
+# endif
+#endif
+#if !defined(SWIFT_ENUM)
+# define SWIFT_ENUM(_type, _name, _extensibility) enum _name : _type _name; enum SWIFT_ENUM_ATTR(_extensibility) SWIFT_ENUM_EXTRA _name : _type
+# if __has_feature(generalized_swift_name)
+#  define SWIFT_ENUM_NAMED(_type, _name, SWIFT_NAME, _extensibility) enum _name : _type _name SWIFT_COMPILE_NAME(SWIFT_NAME); enum SWIFT_COMPILE_NAME(SWIFT_NAME) SWIFT_ENUM_ATTR(_extensibility) SWIFT_ENUM_EXTRA _name : _type
+# else
+#  define SWIFT_ENUM_NAMED(_type, _name, SWIFT_NAME, _extensibility) SWIFT_ENUM(_type, _name, _extensibility)
+# endif
+#endif
+#if !defined(SWIFT_UNAVAILABLE)
+# define SWIFT_UNAVAILABLE __attribute__((unavailable))
+#endif
+#if !defined(SWIFT_UNAVAILABLE_MSG)
+# define SWIFT_UNAVAILABLE_MSG(msg) __attribute__((unavailable(msg)))
+#endif
+#if !defined(SWIFT_AVAILABILITY)
+# define SWIFT_AVAILABILITY(plat, ...) __attribute__((availability(plat, __VA_ARGS__)))
+#endif
+#if !defined(SWIFT_WEAK_IMPORT)
+# define SWIFT_WEAK_IMPORT __attribute__((weak_import))
+#endif
+#if !defined(SWIFT_DEPRECATED)
+# define SWIFT_DEPRECATED __attribute__((deprecated))
+#endif
+#if !defined(SWIFT_DEPRECATED_MSG)
+# define SWIFT_DEPRECATED_MSG(...) __attribute__((deprecated(__VA_ARGS__)))
+#endif
+#if !defined(SWIFT_DEPRECATED_OBJC)
+# if __has_feature(attribute_diagnose_if_objc)
+#  define SWIFT_DEPRECATED_OBJC(Msg) __attribute__((diagnose_if(1, Msg, "warning")))
+# else
+#  define SWIFT_DEPRECATED_OBJC(Msg) SWIFT_DEPRECATED_MSG(Msg)
+# endif
+#endif
+#if defined(__OBJC__)
+#if !defined(IBSegueAction)
+# define IBSegueAction 
+#endif
+#endif
+#if !defined(SWIFT_EXTERN)
+# if defined(__cplusplus)
+#  define SWIFT_EXTERN extern "C"
+# else
+#  define SWIFT_EXTERN extern
+# endif
+#endif
+#if !defined(SWIFT_CALL)
+# define SWIFT_CALL __attribute__((swiftcall))
+#endif
+#if !defined(SWIFT_INDIRECT_RESULT)
+# define SWIFT_INDIRECT_RESULT __attribute__((swift_indirect_result))
+#endif
+#if !defined(SWIFT_CONTEXT)
+# define SWIFT_CONTEXT __attribute__((swift_context))
+#endif
+#if !defined(SWIFT_ERROR_RESULT)
+# define SWIFT_ERROR_RESULT __attribute__((swift_error_result))
+#endif
+#if defined(__cplusplus)
+# define SWIFT_NOEXCEPT noexcept
+#else
+# define SWIFT_NOEXCEPT 
+#endif
+#if !defined(SWIFT_C_INLINE_THUNK)
+# if __has_attribute(always_inline)
+# if __has_attribute(nodebug)
+#  define SWIFT_C_INLINE_THUNK inline __attribute__((always_inline)) __attribute__((nodebug))
+# else
+#  define SWIFT_C_INLINE_THUNK inline __attribute__((always_inline))
+# endif
+# else
+#  define SWIFT_C_INLINE_THUNK inline
+# endif
+#endif
+#if defined(_WIN32)
+#if !defined(SWIFT_IMPORT_STDLIB_SYMBOL)
+# define SWIFT_IMPORT_STDLIB_SYMBOL __declspec(dllimport)
+#endif
+#else
+#if !defined(SWIFT_IMPORT_STDLIB_SYMBOL)
+# define SWIFT_IMPORT_STDLIB_SYMBOL 
+#endif
+#endif
+#if defined(__OBJC__)
+#if __has_feature(objc_modules)
+#if __has_warning("-Watimport-in-framework-header")
+#pragma clang diagnostic ignored "-Watimport-in-framework-header"
+#endif
+@import AuthenticationServices;
+@import CoreData;
+@import Foundation;
+@import ObjectiveC;
+#endif
+
+#endif
+#pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
+#pragma clang diagnostic ignored "-Wduplicate-method-arg"
+#if __has_warning("-Wpragma-clang-attribute")
+# pragma clang diagnostic ignored "-Wpragma-clang-attribute"
+#endif
+#pragma clang diagnostic ignored "-Wunknown-pragmas"
+#pragma clang diagnostic ignored "-Wnullability"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+#pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
+
+#if __has_attribute(external_source_symbol)
+# pragma push_macro("any")
+# undef any
+# pragma clang attribute push(__attribute__((external_source_symbol(language="Swift", defined_in="FitnessCoach",generated_declaration))), apply_to=any(function,enum,objc_interface,objc_category,objc_protocol))
+# pragma pop_macro("any")
+#endif
+
+#if defined(__OBJC__)
+
+@class NSEntityDescription;
+@class NSManagedObjectContext;
+SWIFT_CLASS_NAMED("AssignedMealPlan")
+@interface AssignedMealPlan : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class NSUUID;
+@class NSDate;
+@class NSString;
+@class Client;
+@class MealPlanTemplate;
+@interface AssignedMealPlan (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSDate * _Nullable assignedDate;
+@property (nonatomic, copy) NSDate * _Nullable startDate;
+@property (nonatomic, copy) NSDate * _Nullable endDate;
+@property (nonatomic, copy) NSString * _Nullable status;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic, strong) Client * _Nullable client;
+@property (nonatomic, strong) MealPlanTemplate * _Nullable mealPlanTemplate;
+@end
+
+SWIFT_CLASS_NAMED("AssignedWorkout")
+@interface AssignedWorkout : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class WorkoutTemplate;
+@class WorkoutSession;
+@interface AssignedWorkout (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSDate * _Nullable assignedDate;
+@property (nonatomic, copy) NSDate * _Nullable scheduledDate;
+@property (nonatomic, copy) NSString * _Nullable status;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic, strong) Client * _Nullable client;
+@property (nonatomic, strong) WorkoutTemplate * _Nullable workoutTemplate;
+@property (nonatomic, strong) WorkoutSession * _Nullable workoutSession;
+@end
+
+SWIFT_CLASS("_TtC12FitnessCoach21AuthenticationManager")
+@interface AuthenticationManager : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class ASAuthorizationController;
+@interface AuthenticationManager (SWIFT_EXTENSION(FitnessCoach)) <ASAuthorizationControllerPresentationContextProviding>
+- (ASPresentationAnchor _Nonnull)presentationAnchorForAuthorizationController:(ASAuthorizationController * _Nonnull)controller SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@class ASAuthorization;
+@interface AuthenticationManager (SWIFT_EXTENSION(FitnessCoach)) <ASAuthorizationControllerDelegate>
+- (void)authorizationController:(ASAuthorizationController * _Nonnull)controller didCompleteWithAuthorization:(ASAuthorization * _Nonnull)authorization;
+- (void)authorizationController:(ASAuthorizationController * _Nonnull)controller didCompleteWithError:(NSError * _Nonnull)error;
+@end
+
+SWIFT_CLASS_NAMED("Client")
+@interface Client : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class NSSet;
+@interface Client (SWIFT_EXTENSION(FitnessCoach))
+- (void)addAssignedWorkoutsObject:(AssignedWorkout * _Nonnull)value;
+- (void)removeAssignedWorkoutsObject:(AssignedWorkout * _Nonnull)value;
+- (void)addAssignedWorkouts:(NSSet * _Nonnull)values;
+- (void)removeAssignedWorkouts:(NSSet * _Nonnull)values;
+@end
+
+@interface Client (SWIFT_EXTENSION(FitnessCoach))
+- (void)addAssignedMealPlansObject:(AssignedMealPlan * _Nonnull)value;
+- (void)removeAssignedMealPlansObject:(AssignedMealPlan * _Nonnull)value;
+- (void)addAssignedMealPlans:(NSSet * _Nonnull)values;
+- (void)removeAssignedMealPlans:(NSSet * _Nonnull)values;
+@end
+
+@class User;
+@class Coach;
+@interface Client (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic) double startWeight;
+@property (nonatomic) double goalWeight;
+@property (nonatomic, copy) NSDate * _Nullable startDate;
+@property (nonatomic, copy) NSDate * _Nullable targetDate;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable medicalConditions;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable injuries;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable preferences;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic) BOOL isActive;
+@property (nonatomic, strong) User * _Nullable user;
+@property (nonatomic, strong) Coach * _Nullable coach;
+@property (nonatomic, strong) NSSet * _Nullable assignedWorkouts;
+@property (nonatomic, strong) NSSet * _Nullable assignedMealPlans;
+@end
+
+SWIFT_CLASS_NAMED("Coach")
+@interface Coach : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface Coach (SWIFT_EXTENSION(FitnessCoach))
+- (void)addWorkoutTemplatesObject:(WorkoutTemplate * _Nonnull)value;
+- (void)removeWorkoutTemplatesObject:(WorkoutTemplate * _Nonnull)value;
+- (void)addWorkoutTemplates:(NSSet * _Nonnull)values;
+- (void)removeWorkoutTemplates:(NSSet * _Nonnull)values;
+@end
+
+@interface Coach (SWIFT_EXTENSION(FitnessCoach))
+- (void)addClientsObject:(Client * _Nonnull)value;
+- (void)removeClientsObject:(Client * _Nonnull)value;
+- (void)addClients:(NSSet * _Nonnull)values;
+- (void)removeClients:(NSSet * _Nonnull)values;
+@end
+
+@interface Coach (SWIFT_EXTENSION(FitnessCoach))
+- (void)addMealPlanTemplatesObject:(MealPlanTemplate * _Nonnull)value;
+- (void)removeMealPlanTemplatesObject:(MealPlanTemplate * _Nonnull)value;
+- (void)addMealPlanTemplates:(NSSet * _Nonnull)values;
+- (void)removeMealPlanTemplates:(NSSet * _Nonnull)values;
+@end
+
+@interface Coach (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable businessName;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable certifications;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable specializations;
+@property (nonatomic) int16_t yearsOfExperience;
+@property (nonatomic, copy) NSString * _Nullable bio;
+@property (nonatomic) double hourlyRate;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, strong) User * _Nullable user;
+@property (nonatomic, strong) NSSet * _Nullable clients;
+@property (nonatomic, strong) NSSet * _Nullable workoutTemplates;
+@property (nonatomic, strong) NSSet * _Nullable mealPlanTemplates;
+@end
+
+SWIFT_CLASS_NAMED("Exercise")
+@interface Exercise : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class WorkoutExercise;
+@interface Exercise (SWIFT_EXTENSION(FitnessCoach))
+- (void)addWorkoutExercisesObject:(WorkoutExercise * _Nonnull)value;
+- (void)removeWorkoutExercisesObject:(WorkoutExercise * _Nonnull)value;
+- (void)addWorkoutExercises:(NSSet * _Nonnull)values;
+- (void)removeWorkoutExercises:(NSSet * _Nonnull)values;
+@end
+
+@interface Exercise (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable name;
+@property (nonatomic, copy) NSString * _Nullable category;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable muscleGroups;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable equipment;
+@property (nonatomic, copy) NSString * _Nullable instructions;
+@property (nonatomic, copy) NSString * _Nullable difficulty;
+@property (nonatomic, copy) NSString * _Nullable videoURL;
+@property (nonatomic, copy) NSString * _Nullable imageURL;
+@property (nonatomic) BOOL isCustom;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, strong) NSSet * _Nullable workoutExercises;
+@end
+
+SWIFT_CLASS_NAMED("FoodItem")
+@interface FoodItem : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class MealPlanItem;
+@interface FoodItem (SWIFT_EXTENSION(FitnessCoach))
+- (void)addMealPlanItemsObject:(MealPlanItem * _Nonnull)value;
+- (void)removeMealPlanItemsObject:(MealPlanItem * _Nonnull)value;
+- (void)addMealPlanItems:(NSSet * _Nonnull)values;
+- (void)removeMealPlanItems:(NSSet * _Nonnull)values;
+@end
+
+@class NutritionEntry;
+@interface FoodItem (SWIFT_EXTENSION(FitnessCoach))
+- (void)addNutritionEntriesObject:(NutritionEntry * _Nonnull)value;
+- (void)removeNutritionEntriesObject:(NutritionEntry * _Nonnull)value;
+- (void)addNutritionEntries:(NSSet * _Nonnull)values;
+- (void)removeNutritionEntries:(NSSet * _Nonnull)values;
+@end
+
+@interface FoodItem (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable name;
+@property (nonatomic, copy) NSString * _Nullable brand;
+@property (nonatomic, copy) NSString * _Nullable category;
+@property (nonatomic, copy) NSString * _Nullable barcode;
+@property (nonatomic) double caloriesPer100g;
+@property (nonatomic) double proteinPer100g;
+@property (nonatomic) double carbsPer100g;
+@property (nonatomic) double fatPer100g;
+@property (nonatomic) double fiberPer100g;
+@property (nonatomic) double sugarPer100g;
+@property (nonatomic) double sodiumPer100g;
+@property (nonatomic) double servingSize;
+@property (nonatomic, copy) NSString * _Nullable servingUnit;
+@property (nonatomic) BOOL isVerified;
+@property (nonatomic) BOOL isCustom;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, strong) NSSet * _Nullable nutritionEntries;
+@property (nonatomic, strong) NSSet * _Nullable mealPlanItems;
+@end
+
+SWIFT_CLASS_NAMED("Goal")
+@interface Goal : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface Goal (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable title;
+@property (nonatomic, copy) NSString * _Nullable desc;
+@property (nonatomic, copy) NSString * _Nullable category;
+@property (nonatomic) double targetValue;
+@property (nonatomic) double currentValue;
+@property (nonatomic, copy) NSString * _Nullable unit;
+@property (nonatomic, copy) NSDate * _Nullable startDate;
+@property (nonatomic, copy) NSDate * _Nullable targetDate;
+@property (nonatomic, copy) NSString * _Nullable status;
+@property (nonatomic, copy) NSString * _Nullable priority;
+@property (nonatomic) BOOL isCompleted;
+@property (nonatomic, copy) NSDate * _Nullable completedDate;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, strong) User * _Nullable user;
+@end
+
+SWIFT_CLASS_NAMED("MealPlanItem")
+@interface MealPlanItem : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface MealPlanItem (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic) int16_t day;
+@property (nonatomic, copy) NSString * _Nullable mealType;
+@property (nonatomic) double quantity;
+@property (nonatomic, copy) NSString * _Nullable unit;
+@property (nonatomic) int16_t orderIndex;
+@property (nonatomic, strong) MealPlanTemplate * _Nullable mealPlanTemplate;
+@property (nonatomic, strong) FoodItem * _Nullable foodItem;
+@end
+
+SWIFT_CLASS_NAMED("MealPlanTemplate")
+@interface MealPlanTemplate : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface MealPlanTemplate (SWIFT_EXTENSION(FitnessCoach))
+- (void)addAssignedMealPlansObject:(AssignedMealPlan * _Nonnull)value;
+- (void)removeAssignedMealPlansObject:(AssignedMealPlan * _Nonnull)value;
+- (void)addAssignedMealPlans:(NSSet * _Nonnull)values;
+- (void)removeAssignedMealPlans:(NSSet * _Nonnull)values;
+@end
+
+@interface MealPlanTemplate (SWIFT_EXTENSION(FitnessCoach))
+- (void)addMealsObject:(MealPlanItem * _Nonnull)value;
+- (void)removeMealsObject:(MealPlanItem * _Nonnull)value;
+- (void)addMeals:(NSSet * _Nonnull)values;
+- (void)removeMeals:(NSSet * _Nonnull)values;
+@end
+
+@interface MealPlanTemplate (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable name;
+@property (nonatomic, copy) NSString * _Nullable desc;
+@property (nonatomic, copy) NSString * _Nullable goal;
+@property (nonatomic) int16_t targetCalories;
+@property (nonatomic) int16_t targetProtein;
+@property (nonatomic) int16_t targetCarbs;
+@property (nonatomic) int16_t targetFat;
+@property (nonatomic) int16_t duration;
+@property (nonatomic) BOOL isPublic;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable tags;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, strong) Coach * _Nullable coach;
+@property (nonatomic, strong) NSSet * _Nullable meals;
+@property (nonatomic, strong) NSSet * _Nullable assignedMealPlans;
+@end
+
+SWIFT_CLASS_NAMED("NutritionEntry")
+@interface NutritionEntry : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface NutritionEntry (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSDate * _Nullable date;
+@property (nonatomic, copy) NSString * _Nullable mealType;
+@property (nonatomic) double quantity;
+@property (nonatomic, copy) NSString * _Nullable unit;
+@property (nonatomic) double calories;
+@property (nonatomic) double protein;
+@property (nonatomic) double carbs;
+@property (nonatomic) double fat;
+@property (nonatomic) double fiber;
+@property (nonatomic) double sugar;
+@property (nonatomic) double sodium;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic, strong) User * _Nullable user;
+@property (nonatomic, strong) FoodItem * _Nullable foodItem;
+@end
+
+SWIFT_CLASS_NAMED("ProgressEntry")
+@interface ProgressEntry : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface ProgressEntry (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSDate * _Nullable date;
+@property (nonatomic, copy) NSString * _Nullable type;
+@property (nonatomic) double weight;
+@property (nonatomic) double bodyFatPercentage;
+@property (nonatomic) double muscleMass;
+@property (nonatomic) double visceralFat;
+@property (nonatomic) double bmi;
+@property (nonatomic) double chest;
+@property (nonatomic) double waist;
+@property (nonatomic) double hips;
+@property (nonatomic) double leftArm;
+@property (nonatomic) double rightArm;
+@property (nonatomic) double leftThigh;
+@property (nonatomic) double rightThigh;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable photoURLs;
+@property (nonatomic, strong) User * _Nullable user;
+@end
+
+SWIFT_CLASS_NAMED("User")
+@interface User : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface User (SWIFT_EXTENSION(FitnessCoach))
+- (void)addWorkoutSessionsObject:(WorkoutSession * _Nonnull)value;
+- (void)removeWorkoutSessionsObject:(WorkoutSession * _Nonnull)value;
+- (void)addWorkoutSessions:(NSSet * _Nonnull)values;
+- (void)removeWorkoutSessions:(NSSet * _Nonnull)values;
+@end
+
+@interface User (SWIFT_EXTENSION(FitnessCoach))
+- (void)addProgressEntriesObject:(ProgressEntry * _Nonnull)value;
+- (void)removeProgressEntriesObject:(ProgressEntry * _Nonnull)value;
+- (void)addProgressEntries:(NSSet * _Nonnull)values;
+- (void)removeProgressEntries:(NSSet * _Nonnull)values;
+@end
+
+@interface User (SWIFT_EXTENSION(FitnessCoach))
+- (void)addGoalsObject:(Goal * _Nonnull)value;
+- (void)removeGoalsObject:(Goal * _Nonnull)value;
+- (void)addGoals:(NSSet * _Nonnull)values;
+- (void)removeGoals:(NSSet * _Nonnull)values;
+@end
+
+@interface User (SWIFT_EXTENSION(FitnessCoach))
+- (void)addNutritionEntriesObject:(NutritionEntry * _Nonnull)value;
+- (void)removeNutritionEntriesObject:(NutritionEntry * _Nonnull)value;
+- (void)addNutritionEntries:(NSSet * _Nonnull)values;
+- (void)removeNutritionEntries:(NSSet * _Nonnull)values;
+@end
+
+@interface User (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable userIdentifier;
+@property (nonatomic, copy) NSString * _Nullable email;
+@property (nonatomic, copy) NSString * _Nullable firstName;
+@property (nonatomic, copy) NSString * _Nullable lastName;
+@property (nonatomic, copy) NSString * _Nullable role;
+@property (nonatomic, copy) NSDate * _Nullable dateOfBirth;
+@property (nonatomic) double height;
+@property (nonatomic, copy) NSString * _Nullable gender;
+@property (nonatomic, copy) NSString * _Nullable activityLevel;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable fitnessGoals;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, copy) NSDate * _Nullable updatedAt;
+@property (nonatomic) BOOL isActive;
+@property (nonatomic, strong) Coach * _Nullable coachProfile;
+@property (nonatomic, strong) Client * _Nullable clientProfile;
+@property (nonatomic, strong) NSSet * _Nullable workoutSessions;
+@property (nonatomic, strong) NSSet * _Nullable nutritionEntries;
+@property (nonatomic, strong) NSSet * _Nullable progressEntries;
+@property (nonatomic, strong) NSSet * _Nullable goals;
+@end
+
+SWIFT_CLASS_NAMED("WorkoutExercise")
+@interface WorkoutExercise : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface WorkoutExercise (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic) int16_t orderIndex;
+@property (nonatomic) int16_t sets;
+@property (nonatomic) int16_t reps;
+@property (nonatomic) double weight;
+@property (nonatomic) int16_t duration;
+@property (nonatomic) double distance;
+@property (nonatomic) int16_t restTime;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic, strong) Exercise * _Nullable exercise;
+@property (nonatomic, strong) WorkoutTemplate * _Nullable workoutTemplate;
+@property (nonatomic, strong) WorkoutSession * _Nullable workoutSession;
+@end
+
+SWIFT_CLASS_NAMED("WorkoutSession")
+@interface WorkoutSession : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface WorkoutSession (SWIFT_EXTENSION(FitnessCoach))
+- (void)addExercisesObject:(WorkoutExercise * _Nonnull)value;
+- (void)removeExercisesObject:(WorkoutExercise * _Nonnull)value;
+- (void)addExercises:(NSSet * _Nonnull)values;
+- (void)removeExercises:(NSSet * _Nonnull)values;
+@end
+
+@interface WorkoutSession (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSDate * _Nullable startTime;
+@property (nonatomic, copy) NSDate * _Nullable endTime;
+@property (nonatomic, copy) NSString * _Nullable status;
+@property (nonatomic) int16_t totalDuration;
+@property (nonatomic) int16_t caloriesBurned;
+@property (nonatomic, copy) NSString * _Nullable notes;
+@property (nonatomic) int16_t rating;
+@property (nonatomic, strong) User * _Nullable user;
+@property (nonatomic, strong) AssignedWorkout * _Nullable assignedWorkout;
+@property (nonatomic, strong) NSSet * _Nullable exercises;
+@end
+
+SWIFT_CLASS_NAMED("WorkoutTemplate")
+@interface WorkoutTemplate : NSManagedObject
+- (nonnull instancetype)initWithEntity:(NSEntityDescription * _Nonnull)entity insertIntoManagedObjectContext:(NSManagedObjectContext * _Nullable)context OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@interface WorkoutTemplate (SWIFT_EXTENSION(FitnessCoach))
+- (void)addExercisesObject:(WorkoutExercise * _Nonnull)value;
+- (void)removeExercisesObject:(WorkoutExercise * _Nonnull)value;
+- (void)addExercises:(NSSet * _Nonnull)values;
+- (void)removeExercises:(NSSet * _Nonnull)values;
+@end
+
+@interface WorkoutTemplate (SWIFT_EXTENSION(FitnessCoach))
+- (void)addAssignedWorkoutsObject:(AssignedWorkout * _Nonnull)value;
+- (void)removeAssignedWorkoutsObject:(AssignedWorkout * _Nonnull)value;
+- (void)addAssignedWorkouts:(NSSet * _Nonnull)values;
+- (void)removeAssignedWorkouts:(NSSet * _Nonnull)values;
+@end
+
+@interface WorkoutTemplate (SWIFT_EXTENSION(FitnessCoach))
+@property (nonatomic, copy) NSUUID * _Nullable id;
+@property (nonatomic, copy) NSString * _Nullable name;
+@property (nonatomic, copy) NSString * _Nullable desc;
+@property (nonatomic, copy) NSString * _Nullable category;
+@property (nonatomic, copy) NSString * _Nullable difficulty;
+@property (nonatomic) int16_t estimatedDuration;
+@property (nonatomic) int16_t caloriesBurned;
+@property (nonatomic) BOOL isPublic;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable tags;
+@property (nonatomic, copy) NSDate * _Nullable createdAt;
+@property (nonatomic, strong) Coach * _Nullable coach;
+@property (nonatomic, strong) NSSet * _Nullable exercises;
+@property (nonatomic, strong) NSSet * _Nullable assignedWorkouts;
 @end
 
 #endif

@@ -1,0 +1,18 @@
+"/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/DerivedSources/GeneratedAssetSymbols.swift":
+  dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/GeneratedAssetSymbols.d"
+  object: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/GeneratedAssetSymbols.o"
+  swift-dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/GeneratedAssetSymbols.swiftdeps"
+  diagnostics: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/GeneratedAssetSymbols.dia"
+  const-values: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/GeneratedAssetSymbols.swiftconstvalues"
+"/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/DerivedSources/CoreDataGenerated/FitnessCoachDataModel/Goal+CoreDataProperties.swift":
+  diagnostics: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/Goal+CoreDataProperties.dia"
+  swift-dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/Goal+CoreDataProperties.swiftdeps"
+  const-values: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/Goal+CoreDataProperties.swiftconstvalues"
+  object: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/Goal+CoreDataProperties.o"
+  dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/Goal+CoreDataProperties.d"
+"/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/DerivedSources/CoreDataGenerated/FitnessCoachDataModel/FitnessCoachDataModel+CoreDataModel.swift":
+  swift-dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/FitnessCoachDataModel+CoreDataModel.swiftdeps"
+  diagnostics: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/FitnessCoachDataModel+CoreDataModel.dia"
+  const-values: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/FitnessCoachDataModel+CoreDataModel.swiftconstvalues"
+  object: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/FitnessCoachDataModel+CoreDataModel.o"
+  dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/x86_64/FitnessCoachDataModel+CoreDataModel.d"

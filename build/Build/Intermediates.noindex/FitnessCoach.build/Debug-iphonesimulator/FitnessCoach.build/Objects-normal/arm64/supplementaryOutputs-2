@@ -1,0 +1,24 @@
+"/Users/ain/FitnessCoach/FitnessCoach/Core/HealthKit/HealthKitManager.swift":
+  swift-dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/HealthKitManager.swiftdeps"
+  diagnostics: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/HealthKitManager.dia"
+  object: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/HealthKitManager.o"
+  const-values: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/HealthKitManager.swiftconstvalues"
+  dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/HealthKitManager.d"
+"/Users/ain/FitnessCoach/FitnessCoach/FitnessCoachApp.swift":
+  object: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/FitnessCoachApp.o"
+  dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/FitnessCoachApp.d"
+  const-values: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/FitnessCoachApp.swiftconstvalues"
+  swift-dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/FitnessCoachApp.swiftdeps"
+  diagnostics: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/FitnessCoachApp.dia"
+"/Users/ain/FitnessCoach/FitnessCoach/Core/Authentication/AuthenticationManager.swift":
+  dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/AuthenticationManager.d"
+  object: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/AuthenticationManager.o"
+  swift-dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/AuthenticationManager.swiftdeps"
+  diagnostics: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/AuthenticationManager.dia"
+  const-values: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/AuthenticationManager.swiftconstvalues"
+"/Users/ain/FitnessCoach/FitnessCoach/Core/Database/CoreDataManager.swift":
+  diagnostics: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/CoreDataManager.dia"
+  dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/CoreDataManager.d"
+  const-values: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/CoreDataManager.swiftconstvalues"
+  object: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/CoreDataManager.o"
+  swift-dependencies: "/Users/ain/FitnessCoach/build/Build/Intermediates.noindex/FitnessCoach.build/Debug-iphonesimulator/FitnessCoach.build/Objects-normal/arm64/CoreDataManager.swiftdeps"

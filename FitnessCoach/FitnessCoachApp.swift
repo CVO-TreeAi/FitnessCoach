@@ -87,20 +87,26 @@ struct FitnessCoachApp: App {
                 .environmentObject(dataManager)
                 .theme(themeManager.currentTheme)
                 .onAppear {
-                    requestHealthKitPermissions()
-                    if dataManager.workouts.isEmpty {
-                        dataManager.loadSampleData()
+                    // Defer non-critical tasks to speed up launch
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        requestHealthKitPermissions()
+                        if dataManager.workouts.isEmpty {
+                            dataManager.loadSampleData()
+                        }
                     }
                 }
         }
     }
     
     private func requestHealthKitPermissions() {
-        Task {
-            do {
-                try await healthKitManager.requestAuthorization()
-            } catch {
-                print("HealthKit authorization failed: \(error)")
+        // Only request if not already authorized
+        Task { @MainActor in
+            if !healthKitManager.isAuthorized {
+                do {
+                    try await healthKitManager.requestAuthorization()
+                } catch {
+                    print("HealthKit authorization failed: \(error)")
+                }
             }
         }
     }
@@ -111,16 +117,9 @@ struct ContentView: View {
     @Environment(\.theme) private var theme
     
     var body: some View {
-        Group {
-            if authManager.isLoading {
-                LoadingView()
-            } else if authManager.isAuthenticated {
-                MainTabView()
-            } else {
-                OnboardingView()
-            }
-        }
-        .preferredColorScheme(nil) // Let system handle dark/light mode
+        // Use the main tab view
+        MainTabView()
+            .preferredColorScheme(nil) // Let system handle dark/light mode
     }
 }
 
@@ -222,7 +221,11 @@ struct ClientsView: View {
 
 // Complete Dashboard Implementation
 struct DashboardPlaceholder: View {
+    @EnvironmentObject private var dataManager: SimpleDataManager
     @Environment(\.theme) private var theme
+    @State private var showingWeightEntry = false
+    @State private var showingQuickWorkout = false
+    @State private var showingFoodEntry = false
     @State private var currentWeight: Double = 185
     @State private var goalWeight: Double = 180
     @State private var todayCalories: Double = 1450

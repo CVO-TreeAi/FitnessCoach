@@ -4,7 +4,7 @@ import Combine
 
 @MainActor
 public class AuthenticationManager: NSObject, ObservableObject {
-    @Published public var isAuthenticated = false
+    @Published public var isAuthenticated = true  // Auto-login for iCloud users
     @Published public var currentUser: AuthUser?
     @Published public var userRole: UserRole = .user
     @Published public var isLoading = false
@@ -14,7 +14,8 @@ public class AuthenticationManager: NSObject, ObservableObject {
     
     public override init() {
         super.init()
-        checkAuthenticationState()
+        // Immediately set up iCloud user
+        setupICloudUser()
     }
     
     public func signInWithApple() {
@@ -40,8 +41,27 @@ public class AuthenticationManager: NSObject, ObservableObject {
         UserDefaults.standard.removeObject(forKey: "user_role")
     }
     
+    private func setupICloudUser() {
+        // Get iCloud user info immediately
+        let hostName = ProcessInfo.processInfo.hostName.components(separatedBy: ".").first ?? "User"
+        
+        currentUser = AuthUser(
+            id: "icloud_user",
+            userIdentifier: "icloud_\(UUID().uuidString)",
+            email: "user@icloud.com",
+            firstName: hostName.capitalized,
+            lastName: "",
+            role: .user,
+            createdAt: Date(),
+            isActive: true
+        )
+        isAuthenticated = true
+        isLoading = false
+    }
+    
     private func checkAuthenticationState() {
         guard let userIdentifier = UserDefaults.standard.string(forKey: "user_identifier") else {
+            setupICloudUser()
             return
         }
         
