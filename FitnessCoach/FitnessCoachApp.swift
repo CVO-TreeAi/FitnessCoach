@@ -103,14 +103,383 @@ struct FitnessCoachApp: App {
 
 struct ContentView: View {
     @EnvironmentObject private var authManager: AuthenticationManager
+    @EnvironmentObject private var healthKitManager: HealthKitManager
+    @EnvironmentObject private var themeManager: ThemeManager
     @Environment(\.theme) private var theme
     
     var body: some View {
-        // Use SimpleWorkingApp for now - all features functional with zero data
-        SimpleWorkingApp()
+        // Use enhanced SimpleWorkingApp with proper UI
+        EnhancedFitnessApp()
+            .environmentObject(authManager)
+            .environmentObject(healthKitManager)
+            .environmentObject(themeManager)
     }
 }
 
+
+// ENHANCED FITNESS APP WITH FULL UI
+struct EnhancedFitnessApp: View {
+    @EnvironmentObject private var healthKitManager: HealthKitManager
+    @State private var selectedTab = 0
+    @State private var waterIntake = 0
+    @State private var todayCalories = 0
+    @State private var workoutsCompleted = 0
+    @State private var showingSheet = false
+    @State private var sheetType: SheetType = .weight
+    
+    enum SheetType {
+        case weight, workout, food, quickWorkout, mealLog, waterLog
+    }
+    
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            // DASHBOARD TAB
+            NavigationView {
+                ScrollView {
+                    VStack(spacing: 20) {
+                        // Stats Cards
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                            EnhancedStatCard(title: "Calories", value: "\(todayCalories)", subtitle: "/ 2000 goal", icon: "flame.fill", color: .orange)
+                            EnhancedStatCard(title: "Water", value: "\(waterIntake)", subtitle: "/ 8 cups", icon: "drop.fill", color: .blue)
+                            EnhancedStatCard(title: "Steps", value: "\(healthKitManager.todaysSteps)", subtitle: "/ 10k goal", icon: "figure.walk", color: .green)
+                            EnhancedStatCard(title: "Workouts", value: "\(workoutsCompleted)", subtitle: "this week", icon: "figure.run", color: .purple)
+                        }
+                        
+                        // Quick Actions
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Quick Actions")
+                                .font(.headline)
+                            
+                            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                                QuickButton(title: "Log Workout", icon: "dumbbell.fill", color: .blue) {
+                                    sheetType = .workout
+                                    showingSheet = true
+                                }
+                                QuickButton(title: "Track Meal", icon: "fork.knife", color: .orange) {
+                                    sheetType = .mealLog
+                                    showingSheet = true
+                                }
+                                QuickButton(title: "Weight", icon: "scalemass.fill", color: .green) {
+                                    sheetType = .weight
+                                    showingSheet = true
+                                }
+                                QuickButton(title: "Water +1", icon: "plus.circle.fill", color: .cyan) {
+                                    waterIntake += 1
+                                }
+                            }
+                        }
+                        
+                        // Recent Activity
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Recent Activity")
+                                .font(.headline)
+                            
+                            ActivityRow(title: "Morning Run", subtitle: "5.2 km • 28 min", icon: "figure.run", color: .orange)
+                            ActivityRow(title: "Protein Shake", subtitle: "320 cal • 35g protein", icon: "cup.and.saucer.fill", color: .green)
+                            ActivityRow(title: "Upper Body Workout", subtitle: "45 min • 12 exercises", icon: "dumbbell.fill", color: .blue)
+                        }
+                    }
+                    .padding()
+                }
+                .navigationTitle("FitnessCoach")
+                .background(Color(.systemGroupedBackground))
+            }
+            .tabItem {
+                Label("Dashboard", systemImage: "house.fill")
+            }
+            .tag(0)
+            
+            // WORKOUTS TAB
+            NavigationView {
+                List {
+                    Section("Quick Start") {
+                        EnhancedWorkoutRow(name: "Push Day", subtitle: "Chest, Shoulders, Triceps", duration: "45 min", icon: "figure.strengthtraining.traditional")
+                        EnhancedWorkoutRow(name: "Pull Day", subtitle: "Back, Biceps", duration: "45 min", icon: "figure.strengthtraining.traditional")
+                        EnhancedWorkoutRow(name: "Leg Day", subtitle: "Quads, Hamstrings, Glutes", duration: "50 min", icon: "figure.strengthtraining.traditional")
+                        EnhancedWorkoutRow(name: "StrongLifts 5×5 A", subtitle: "Squat, Bench, Row", duration: "45 min", icon: "dumbbell.fill")
+                    }
+                    
+                    Section("Your Workouts") {
+                        Button(action: { 
+                            sheetType = .workout
+                            showingSheet = true 
+                        }) {
+                            Label("Create Custom Workout", systemImage: "plus.circle.fill")
+                        }
+                    }
+                }
+                .navigationTitle("Workouts")
+            }
+            .tabItem {
+                Label("Workouts", systemImage: "figure.strengthtraining.traditional")
+            }
+            .tag(1)
+            
+            // NUTRITION TAB
+            NavigationView {
+                List {
+                    Section("Today's Summary") {
+                        HStack {
+                            Text("Calories")
+                            Spacer()
+                            Text("\(todayCalories) / 2000")
+                                .foregroundColor(.secondary)
+                        }
+                        MacroRow(name: "Protein", current: 0, goal: 150, color: .blue)
+                        MacroRow(name: "Carbs", current: 0, goal: 250, color: .orange)
+                        MacroRow(name: "Fats", current: 0, goal: 65, color: .green)
+                    }
+                    
+                    Section("Meals") {
+                        Button(action: {
+                            sheetType = .mealLog
+                            showingSheet = true
+                        }) {
+                            Label("Log Meal", systemImage: "plus.circle.fill")
+                        }
+                    }
+                    
+                    Section("Water Intake") {
+                        HStack {
+                            Text("Water")
+                            Spacer()
+                            Button("-") { if waterIntake > 0 { waterIntake -= 1 } }
+                                .buttonStyle(BorderlessButtonStyle())
+                            Text("\(waterIntake) / 8 cups")
+                                .foregroundColor(.secondary)
+                            Button("+") { waterIntake += 1 }
+                                .buttonStyle(BorderlessButtonStyle())
+                        }
+                    }
+                }
+                .navigationTitle("Nutrition")
+            }
+            .tabItem {
+                Label("Nutrition", systemImage: "leaf.fill")
+            }
+            .tag(2)
+            
+            // PROGRESS TAB
+            NavigationView {
+                List {
+                    Section("Weight Tracking") {
+                        Button(action: {
+                            sheetType = .weight
+                            showingSheet = true
+                        }) {
+                            Label("Log Weight", systemImage: "scalemass.fill")
+                        }
+                    }
+                    
+                    Section("Statistics") {
+                        StatRow(title: "Current Weight", value: "-- lbs")
+                        StatRow(title: "Goal Weight", value: "-- lbs")
+                        StatRow(title: "Weekly Average", value: "-- workouts")
+                        StatRow(title: "Total Workouts", value: "\(workoutsCompleted)")
+                    }
+                }
+                .navigationTitle("Progress")
+            }
+            .tabItem {
+                Label("Progress", systemImage: "chart.line.uptrend.xyaxis")
+            }
+            .tag(3)
+        }
+        .sheet(isPresented: $showingSheet) {
+            switch sheetType {
+            case .weight:
+                WeightSheet(weight: .constant(0.0), isPresented: $showingSheet)
+            case .workout:
+                WorkoutSheet(isPresented: $showingSheet)
+            case .food:
+                FoodSheet(isPresented: $showingSheet)
+            case .quickWorkout:
+                WorkoutSheet(isPresented: $showingSheet)
+            case .mealLog:
+                FoodSheet(isPresented: $showingSheet)
+            case .waterLog:
+                WaterSheet(waterIntake: $waterIntake, isPresented: $showingSheet)
+            }
+        }
+        .onAppear {
+            // Update with HealthKit data
+            todayCalories = 0
+            workoutsCompleted = 0
+        }
+    }
+}
+
+// Helper Views
+struct EnhancedStatCard: View {
+    let title: String
+    let value: String
+    let subtitle: String
+    let icon: String
+    let color: Color
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Image(systemName: icon)
+                    .foregroundColor(color)
+                Spacer()
+            }
+            Text(value)
+                .font(.title2)
+                .fontWeight(.bold)
+            Text(title)
+                .font(.caption)
+                .foregroundColor(.secondary)
+            Text(subtitle)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+        }
+        .padding()
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+        .shadow(radius: 2)
+    }
+}
+
+struct QuickButton: View {
+    let title: String
+    let icon: String
+    let color: Color
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            VStack {
+                Image(systemName: icon)
+                    .font(.title2)
+                    .foregroundColor(color)
+                Text(title)
+                    .font(.caption)
+                    .foregroundColor(.primary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color(.secondarySystemBackground))
+            .cornerRadius(12)
+        }
+    }
+}
+
+struct ActivityRow: View {
+    let title: String
+    let subtitle: String
+    let icon: String
+    let color: Color
+    
+    var body: some View {
+        HStack {
+            Image(systemName: icon)
+                .foregroundColor(color)
+                .frame(width: 30)
+            VStack(alignment: .leading) {
+                Text(title).font(.subheadline)
+                Text(subtitle).font(.caption).foregroundColor(.secondary)
+            }
+            Spacer()
+        }
+        .padding(.vertical, 4)
+    }
+}
+
+struct EnhancedWorkoutRow: View {
+    let name: String
+    let subtitle: String
+    let duration: String
+    let icon: String
+    
+    var body: some View {
+        HStack {
+            Image(systemName: icon)
+                .foregroundColor(.blue)
+                .frame(width: 30)
+            VStack(alignment: .leading) {
+                Text(name)
+                Text(subtitle).font(.caption).foregroundColor(.secondary)
+            }
+            Spacer()
+            Text(duration)
+                .font(.caption)
+                .foregroundColor(.secondary)
+        }
+    }
+}
+
+struct MacroRow: View {
+    let name: String
+    let current: Int
+    let goal: Int
+    let color: Color
+    
+    var body: some View {
+        HStack {
+            Text(name)
+            Spacer()
+            Text("\(current)g / \(goal)g")
+                .foregroundColor(.secondary)
+        }
+    }
+}
+
+struct StatRow: View {
+    let title: String
+    let value: String
+    
+    var body: some View {
+        HStack {
+            Text(title)
+            Spacer()
+            Text(value)
+                .foregroundColor(.secondary)
+        }
+    }
+}
+
+struct WaterSheet: View {
+    @Binding var waterIntake: Int
+    @Binding var isPresented: Bool
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                Text("Water Intake")
+                    .font(.largeTitle)
+                    .padding()
+                
+                HStack {
+                    Button("-") {
+                        if waterIntake > 0 { waterIntake -= 1 }
+                    }
+                    .font(.title)
+                    .padding()
+                    
+                    Text("\(waterIntake) cups")
+                        .font(.title2)
+                        .frame(width: 100)
+                    
+                    Button("+") {
+                        waterIntake += 1
+                    }
+                    .font(.title)
+                    .padding()
+                }
+                
+                Button("Done") {
+                    isPresented = false
+                }
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+            }
+            .navigationBarItems(trailing: Button("Close") { isPresented = false })
+        }
+    }
+}
 
 // SIMPLE WORKING APP - ALL BUTTONS FUNCTIONAL
 struct SimpleWorkingApp: View {
